@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { Form, Button, InputGroup } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate, createSearchParams } from 'react-router-dom';
 import AuthLayout from '../../Components/AuthLayout';
+import { login } from '../../api/authApi';
 
 /* ===== Icons ===== */
 const EyeIcon = () => (
@@ -40,17 +41,33 @@ const EyeOffIcon = () => (
 
 /* ===== Login Page ===== */
 const LoginPage = () => {
+  const navigate = useNavigate();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [apiError, setApiError] = useState('');
 
-  const handleLogin = (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
-    // Example login data
-    console.log({
-      email,
-      password,
-    });
+    setApiError('');
+    setIsSubmitting(true);
+
+    try {
+      const result = await login(email, password);
+      const query = createSearchParams({
+        flow: 'login',
+        sessionId: result.loginSessionId,
+        email: result.otpDelivery || email,
+        platform: 'web',
+      }).toString();
+
+      navigate(`/otp-verification?${query}`);
+    } catch (error) {
+      setApiError(error?.payload?.message || error.message || 'Login failed. Please try again.');
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -79,6 +96,11 @@ const LoginPage = () => {
 
       {/* Login Form */}
       <Form onSubmit={handleLogin}>
+        {apiError ? (
+          <div className="alert alert-danger small py-2" role="alert">
+            {apiError}
+          </div>
+        ) : null}
 
         {/* Email */}
         <Form.Group className="mb-3">
@@ -137,8 +159,9 @@ const LoginPage = () => {
           variant="primary"
           type="submit"
           className="w-100 py-2 fw-bold shadow-sm mb-4"
+          disabled={isSubmitting}
         >
-          Login
+          {isSubmitting ? 'Please wait...' : 'Login'}
         </Button>
       </Form>
 

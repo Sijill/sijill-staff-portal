@@ -14,7 +14,7 @@ const RegisterLabCenter = () => {
       ]}
       optionalDocuments={[
         { name: 'proofOfAddress', label: 'Proof of Address' },
-        { name: 'centerLogo', label: 'Center Logo' }
+        { name: 'labLogo', label: 'Lab Logo' }
       ]}
     />
   );
