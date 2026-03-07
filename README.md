@@ -1,16 +1,35 @@
-# React + Vite
+# Sijill Staff Portal
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Built with React + Vite.
 
-Currently, two official plugins are available:
+## Run with Docker
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+### 1) Build and run
 
-## React Compiler
+```bash
+docker compose up --build
+```
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+The app will be available at `http://localhost:8080`.
 
-## Expanding the ESLint configuration
+### 2) Configure API base URL
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+This project uses `VITE_API_BASE_URL` at **build time**. Set it before building:
+
+```bash
+# PowerShell
+$env:VITE_API_BASE_URL="https://your-api.example.com/api/v1"
+docker compose up --build
+```
+
+```bash
+# Bash
+VITE_API_BASE_URL="https://your-api.example.com/api/v1" docker compose up --build
+```
+
+### 3) Build image directly (optional)
+
+```bash
+docker build -t sijill-staff-portal --build-arg VITE_API_BASE_URL=https://your-api.example.com/api/v1 .
+docker run -p 8080:80 sijill-staff-portal
+```
