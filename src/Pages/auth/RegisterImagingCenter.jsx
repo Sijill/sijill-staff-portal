@@ -10,11 +10,14 @@ const RegisterImagingCenter = () => {
       entityType="Imaging"
       registrationType="simple"
       requiredDocuments={[
-        { name: 'imagingAccreditation', label: 'Imaging Center Accreditation / Business Registration' }
+        {
+          name: 'imagingAccreditation',
+          label: 'Imaging Center Accreditation / Business Registration',
+        },
       ]}
       optionalDocuments={[
         { name: 'proofOfAddress', label: 'Proof of Address' },
-        { name: 'centerLogo', label: 'Center Logo' }
+        { name: 'centerLogo', label: 'Center Logo' },
       ]}
     />
   );

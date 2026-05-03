@@ -1,8 +1,8 @@
 .section-two {
-    padding: 300px;
-    background-color: #f9fafb;
-    display: flex;
-    flex-direction: column;
+  padding: 300px;
+  background-color: #f9fafb;
+  display: flex;
+  flex-direction: column;
 }
 
 /* Title */
@@ -24,7 +24,6 @@
   padding: 30px;
   height: 100%;
 }
-
 
 /* Icon Box */
 .feature-icon {

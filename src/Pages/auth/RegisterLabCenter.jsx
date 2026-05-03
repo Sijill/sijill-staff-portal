@@ -10,11 +10,11 @@ const RegisterLabCenter = () => {
       entityType="Laboratory"
       registrationType="simple"
       requiredDocuments={[
-        { name: 'labAccreditation', label: 'Lab Accreditation / Business Registration' }
+        { name: 'labAccreditation', label: 'Lab Accreditation / Business Registration' },
       ]}
       optionalDocuments={[
         { name: 'proofOfAddress', label: 'Proof of Address' },
-        { name: 'labLogo', label: 'Lab Logo' }
+        { name: 'labLogo', label: 'Lab Logo' },
       ]}
     />
   );

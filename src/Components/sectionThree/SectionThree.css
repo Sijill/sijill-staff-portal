@@ -20,7 +20,7 @@
 .info-card-icon {
   background-color: #e6f9ec; /* light green */
   border-radius: 8px;
-  width: 40px;  /* smaller width */
+  width: 40px; /* smaller width */
   height: 40px; /* smaller height */
   display: flex;
   justify-content: center;
@@ -41,7 +41,7 @@
 .highlight-icon {
   background-color: #d9f7dd;
   border-radius: 50%;
-  width: 50px;  /* smaller width */
+  width: 50px; /* smaller width */
   height: 50px; /* smaller height */
   display: flex;
   justify-content: center;
@@ -49,5 +49,3 @@
   margin: 0 auto 10px auto;
   font-size: 24px; /* smaller font */
 }
-
-

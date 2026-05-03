@@ -1,11 +1,5 @@
 import React from 'react';
-import {
-  Box,
-  Card,
-  CardContent,
-  Button,
-  Container
-} from '@mui/material';
+import { Box, Card, CardContent, Button, Container } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import logo from '../assets/logo_light-removebg.png';
 
@@ -21,7 +15,7 @@ const AuthLayout = ({ children, showBackButton = true }) => {
         alignItems: 'center',
         justifyContent: 'center',
         bgcolor: '#f0f7ff',
-        px: { xs: 1, sm: 2 }
+        px: { xs: 1, sm: 2 },
       }}
     >
       <Container maxWidth="sm">
@@ -29,12 +23,12 @@ const AuthLayout = ({ children, showBackButton = true }) => {
           elevation={6}
           sx={{
             borderRadius: 4,
-            width: '100%'
+            width: '100%',
           }}
         >
           <CardContent
             sx={{
-              p: { xs: 3, sm: 4, md: 5 }
+              p: { xs: 3, sm: 4, md: 5 },
             }}
           >
             {/* Back Button */}
@@ -48,7 +42,7 @@ const AuthLayout = ({ children, showBackButton = true }) => {
                   color: 'text.secondary',
                   fontWeight: 600,
                   textTransform: 'none',
-                  justifyContent: 'flex-start'
+                  justifyContent: 'flex-start',
                 }}
               >
                 ← Back
@@ -60,7 +54,7 @@ const AuthLayout = ({ children, showBackButton = true }) => {
               sx={{
                 display: 'flex',
                 justifyContent: 'center',
-                mb: 4
+                mb: 4,
               }}
             >
               <Box
@@ -73,7 +67,7 @@ const AuthLayout = ({ children, showBackButton = true }) => {
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
-                  boxShadow: 1
+                  boxShadow: 1,
                 }}
               >
                 <Box
@@ -81,16 +75,14 @@ const AuthLayout = ({ children, showBackButton = true }) => {
                   src={logo}
                   alt="Logo"
                   sx={{
-                    width: { xs: 45, sm: 55 }
+                    width: { xs: 45, sm: 55 },
                   }}
                 />
               </Box>
             </Box>
 
             {/* Content */}
-            <Box width="100%">
-              {children}
-            </Box>
+            <Box width="100%">{children}</Box>
           </CardContent>
         </Card>
       </Container>

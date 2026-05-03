@@ -1,19 +1,16 @@
-import axios from "axios";
+import axios from 'axios';
 
-const LOCAL_API_BASE_URL = "http://localhost:8000/api/v1";
-const PROD_API_BASE_URL = "https://api.sijill.gov/api/v1";
+const LOCAL_API_BASE_URL = 'http://localhost:8000/api/v1';
+const PROD_API_BASE_URL = 'https://api.sijill.gov/api/v1';
 
 export function getApiBaseUrl() {
   const envUrl = import.meta.env.VITE_API_BASE_URL;
-  if (envUrl && typeof envUrl === "string") {
-    return envUrl.replace(/\/+$/, "");
+  if (envUrl && typeof envUrl === 'string') {
+    return envUrl.replace(/\/+$/, '');
   }
 
   const hostname = window.location.hostname;
-  const isLocalHost =
-    hostname === "localhost" ||
-    hostname === "127.0.0.1" ||
-    hostname === "::1";
+  const isLocalHost = hostname === 'localhost' || hostname === '127.0.0.1' || hostname === '::1';
 
   return isLocalHost ? LOCAL_API_BASE_URL : PROD_API_BASE_URL;
 }
@@ -23,17 +20,30 @@ const api = axios.create({
   withCredentials: true,
 });
 
+api.interceptors.request.use((config) => {
+  const accessToken = localStorage.getItem('accessToken');
+
+  if (accessToken && !config.headers?.Authorization) {
+    config.headers = {
+      ...config.headers,
+      Authorization: `Bearer ${accessToken}`,
+    };
+  }
+
+  return config;
+});
+
 api.interceptors.response.use(
   (response) => response.data,
   (axiosError) => {
     const payload = axiosError?.response?.data;
     const status = axiosError?.response?.status;
     const message =
-      typeof payload?.message === "string"
+      typeof payload?.message === 'string'
         ? payload.message
         : Array.isArray(payload?.message)
-          ? payload.message.join(", ")
-          : axiosError.message || "Request failed";
+          ? payload.message.join(', ')
+          : axiosError.message || 'Request failed';
 
     const error = new Error(message);
     error.status = status;

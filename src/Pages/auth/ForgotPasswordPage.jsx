@@ -57,9 +57,7 @@ const ForgotPasswordPage = () => {
         ) : null}
 
         <Form.Group className="mb-4">
-          <Form.Label className="small fw-bold text-secondary">
-            Email Address
-          </Form.Label>
+          <Form.Label className="small fw-bold text-secondary">Email Address</Form.Label>
           <Form.Control
             type="email"
             placeholder="admin@ehr.com"

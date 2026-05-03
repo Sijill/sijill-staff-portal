@@ -58,7 +58,7 @@ const LoginPage = () => {
       const query = createSearchParams({
         mode: 'login',
         loginSessionId: response.loginSessionId,
-        email: response.otpDelivery || email
+        email: response.otpDelivery || email,
       }).toString();
 
       navigate(`/otp-verification?${query}`);
@@ -71,7 +71,6 @@ const LoginPage = () => {
 
   return (
     <AuthLayout showBackButton={true}>
-
       {/* Unified Login Alert */}
       <div
         className="p-3 mb-4 rounded-3 d-flex align-items-start"
@@ -82,13 +81,9 @@ const LoginPage = () => {
           <h6 className="text-primary fw-bold mb-1" style={{ fontSize: '0.9rem' }}>
             Unified Login
           </h6>
-          <p
-            className="text-muted mb-0"
-            style={{ fontSize: '0.8rem', lineHeight: '1.4' }}
-          >
-            The system will automatically identify your role (Admin, Healthcare
-            Provider, Laboratory, or Imaging Center) and redirect you to your
-            dashboard.
+          <p className="text-muted mb-0" style={{ fontSize: '0.8rem', lineHeight: '1.4' }}>
+            The system will automatically identify your role (Admin, Healthcare Provider,
+            Laboratory, or Imaging Center) and redirect you to your dashboard.
           </p>
         </div>
       </div>
@@ -99,9 +94,7 @@ const LoginPage = () => {
 
         {/* Email */}
         <Form.Group className="mb-3">
-          <Form.Label className="small fw-bold text-secondary">
-            Email Address
-          </Form.Label>
+          <Form.Label className="small fw-bold text-secondary">Email Address</Form.Label>
           <Form.Control
             type="email"
             placeholder="admin@ehr.com"
@@ -114,9 +107,7 @@ const LoginPage = () => {
 
         {/* Password with toggle */}
         <Form.Group className="mb-2">
-          <Form.Label className="small fw-bold text-secondary">
-            Password
-          </Form.Label>
+          <Form.Label className="small fw-bold text-secondary">Password</Form.Label>
 
           <InputGroup className="shadow-sm">
             <Form.Control
@@ -141,10 +132,7 @@ const LoginPage = () => {
 
         {/* Forgot password */}
         <div className="text-end mb-4">
-          <Link
-            to="/forgot-password"
-            className="text-decoration-none fw-bold small text-primary"
-          >
+          <Link to="/forgot-password" className="text-decoration-none fw-bold small text-primary">
             Forgot password?
           </Link>
         </div>
@@ -177,7 +165,6 @@ const LoginPage = () => {
           </Link>
         </p>
       </div>
-
     </AuthLayout>
   );
 };

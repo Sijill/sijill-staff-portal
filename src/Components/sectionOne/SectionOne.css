@@ -4,7 +4,7 @@
 .section-one {
   background-color: #0b4d7a; /* Exact deep blue from the image */
   min-height: 100vh;
-  width: 100%;
+  min-width: 100vw;
   padding: 80px 20px;
   font-family: 'Source Sans 3', sans-serif;
 }
@@ -51,7 +51,8 @@
 }
 
 /* Button Customization */
-.btn-login, .btn-register {
+.btn-login,
+.btn-register {
   width: 180px;
   padding: 10px 0;
   border-radius: 12px !important; /* Matches the soft rounding in image */
@@ -71,12 +72,12 @@
   border: 2px solid #ffffff !important;
 }
 
-.btn-login:hover, .btn-register:hover {
+.btn-login:hover,
+.btn-register:hover {
   transform: translateY(-3px);
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
   filter: brightness(1.05);
 }
-
 
 /* ********************************************** */
 /* Action Buttons Container */
@@ -85,21 +86,22 @@
 }
 
 /* Base button style to match image proportions */
-.btn-light, .btn-outline-light {
+.btn-light,
+.btn-outline-light {
   /* Vertical and Horizontal Padding */
-  padding: 12px 0px !important; 
-  
+  padding: 12px 0px !important;
+
   /* Width: set to a large fixed size like the image */
-  width: 220px; 
-  
+  width: 220px;
+
   /* Typography */
-  font-size: 1.25rem !important; 
+  font-size: 1.25rem !important;
   font-weight: 600 !important;
   letter-spacing: 0.5px;
-  
+
   /* Border Radius */
-  border-radius: 12px !important; 
-  
+  border-radius: 12px !important;
+
   /* Smooth interaction */
   transition: all 0.2s ease-in-out;
   display: inline-block;
@@ -128,7 +130,8 @@
 
 /* Mobile Responsiveness: ensure they stack or shrink on small screens */
 @media (max-width: 576px) {
-  .btn-light, .btn-outline-light {
+  .btn-light,
+  .btn-outline-light {
     width: 100%;
     max-width: 280px;
   }
