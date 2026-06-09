@@ -14,6 +14,14 @@ import PatientMedicalIdentity from './Pages/provider/PatientMedicalIdentity';
 import MedicalHistory from './Pages/provider/MedicalHistory';
 import DocumentSession from './Pages/provider/DocumentSession';
 import EncounterRecorded from './Pages/provider/EncounterRecorded';
+import LabSessionPage from './Pages/portal/LabSessionPage';
+import LabOrderPatientView from './Pages/portal/LabOrderPatientView';
+import LabUploadResultsPage from './Pages/portal/LabUploadResultsPage';
+import LabResultSubmittedPage from './Pages/portal/LabResultSubmittedPage';
+import ImagingSessionPage from './Pages/portal/ImagingSessionPage';
+import ImagingOrderPatientView from './Pages/portal/ImagingOrderPatientView';
+import ImagingUploadResultsPage from './Pages/portal/ImagingUploadResultsPage';
+import ImagingResultSubmittedPage from './Pages/portal/ImagingResultSubmittedPage';
 function App() {
   return (
     <>
@@ -39,6 +47,14 @@ function App() {
           <Route path="/provider-session/patient-medical-history" element={<MedicalHistory />} />
           <Route path="/provider-session/patient-document-session" element={<DocumentSession />} />
           <Route path="/provider-session/encounter-recorded" element={<EncounterRecorded />} />
+          <Route path="/lab-session" element={<LabSessionPage />} />
+          <Route path="/lab-session/order" element={<LabOrderPatientView />} />
+          <Route path="/lab-session/upload-results" element={<LabUploadResultsPage />} />
+          <Route path="/lab-session/result-submitted" element={<LabResultSubmittedPage />} />
+          <Route path="/imaging-session" element={<ImagingSessionPage />} />
+          <Route path="/imaging-session/order" element={<ImagingOrderPatientView />} />
+          <Route path="/imaging-session/upload-results" element={<ImagingUploadResultsPage />} />
+          <Route path="/imaging-session/result-submitted" element={<ImagingResultSubmittedPage />} />
 
           <Route>
             {/* <Route path="*" element={<ErrorPage />} /> */}

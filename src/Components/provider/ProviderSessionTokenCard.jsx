@@ -5,6 +5,10 @@ import ProviderStatusMessage from './ProviderStatusMessage';
 export const TOKEN_LENGTH = 6;
 
 export default function ProviderSessionTokenCard({
+  title = "Enter Patient's Permission Token",
+  description = 'Enter the 6-digit patient permission token to open the connected provider session flow.',
+  submitLabel = 'Start Session',
+  submittingLabel = 'Starting Session...',
   token,
   errorMessage,
   isSubmitting,
@@ -17,7 +21,7 @@ export default function ProviderSessionTokenCard({
 
   return (
     <div className="provider-session-token-card">
-      <h1>Enter Patient&apos;s Permission Token</h1>
+      <h1>{title}</h1>
 
       <div className="provider-session-token-inputs">
         {token.map((digit, index) => (
@@ -41,11 +45,11 @@ export default function ProviderSessionTokenCard({
 
       <button className="provider-session-start-button" type="button" onClick={onSubmit} disabled={!isTokenComplete || isSubmitting}>
         {isSubmitting ? <LoaderCircle size={18} /> : <ClipboardPenLine size={18} />}
-        <span>{isSubmitting ? 'Starting Session...' : 'Start Session'}</span>
+        <span>{isSubmitting ? submittingLabel : submitLabel}</span>
       </button>
 
       <p className="mt-3 mb-0" style={{ color: '#587177', fontSize: '0.92rem', lineHeight: 1.5 }}>
-        Enter the 6-digit patient permission token to open the connected provider session flow.
+        {description}
       </p>
     </div>
   );

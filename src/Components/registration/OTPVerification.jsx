@@ -7,6 +7,8 @@ import {
   verifyLoginOtp,
   verifyRegistrationOtp,
 } from '../../api/authApi';
+import { getPortalConfigByRole } from '../../constants/portalSessionConfig';
+import { getAccountStatusMessage } from '../../utils/sessionErrorMessages';
 
 const OTPVerification = ({ email = 'example@email.com' }) => {
   const navigate = useNavigate();
@@ -84,20 +86,20 @@ const OTPVerification = ({ email = 'example@email.com' }) => {
         }
 
         setSuccessMessage(response.message || 'Login successful.');
-        setTimeout(
-          () =>
-            navigate(
-              response.role === 'HEALTHCARE_PROVIDER' ? '/provider-session' : '/'
-            ),
-          800
-        );
+        const portalConfig = getPortalConfigByRole(response.role);
+        const destination =
+          response.role === 'HEALTHCARE_PROVIDER'
+            ? '/provider-session'
+            : portalConfig?.tokenEntryPath || '/';
+
+        setTimeout(() => navigate(destination), 800);
       } else {
         if (!registrationSessionId) throw new Error('Missing registration session ID.');
         await verifyRegistrationOtp(registrationSessionId, otpCode);
         navigate('/login');
       }
     } catch (error) {
-      setErrorMessage(error.message || 'OTP verification failed.');
+      setErrorMessage(getAccountStatusMessage(error) || error.message || 'OTP verification failed.');
     } finally {
       setIsSubmitting(false);
     }

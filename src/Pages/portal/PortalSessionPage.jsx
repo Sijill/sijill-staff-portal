@@ -1,17 +1,20 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import './ProviderSessionPage.css';
-import './ProviderSessionRecentSessions.css';
+import '../../Pages/provider/ProviderSessionPage.css';
+import '../../Pages/provider/ProviderSessionRecentSessions.css';
 import ProviderSessionHeader from '../../Components/provider/ProviderSessionHeader';
 import ProviderSessionTokenCard, { TOKEN_LENGTH } from '../../Components/provider/ProviderSessionTokenCard';
 import RecentClinicalSessions from '../../Components/provider/RecentClinicalSessions';
-import { startClinicalSession } from '../../api/clinicalApi';
-import { buildClinicalRouteState, getRecentClinicalSessions, saveClinicalSession } from '../../utils/clinicalSession';
+import {
+  buildPortalRouteState,
+  getRecentPortalSessions,
+  savePortalSession,
+} from '../../utils/portalSession';
 import { getTokenErrorMessage } from '../../utils/sessionErrorMessages';
 
 const emptyToken = () => Array(TOKEN_LENGTH).fill('');
 
-export default function ProviderSessionPage() {
+export default function PortalSessionPage({ config }) {
   const navigate = useNavigate();
   const [token, setToken] = useState(emptyToken);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -19,18 +22,20 @@ export default function ProviderSessionPage() {
   const [recentSessions, setRecentSessions] = useState([]);
 
   useEffect(() => {
-    setRecentSessions(getRecentClinicalSessions());
-  }, []);
+    setRecentSessions(getRecentPortalSessions(config));
+  }, [config]);
 
-  const openClinicalSession = (session) =>
-    navigate('/provider-session/patient-medical-identity', { state: buildClinicalRouteState(session) });
+  const openPortalSession = (session) =>
+    navigate(config.orderViewPath, { state: buildPortalRouteState(session) });
 
-  const refreshRecentSessions = () => setRecentSessions(getRecentClinicalSessions());
+  const refreshRecentSessions = () => setRecentSessions(getRecentPortalSessions(config));
   const clearError = () => setErrorMessage('');
   const getCode = () => token.join('');
 
   const fillToken = (value) => {
-    const nextToken = emptyToken().map((_, index) => value.replace(/\D/g, '').slice(0, TOKEN_LENGTH)[index] || '');
+    const nextToken = emptyToken().map(
+      (_, index) => value.replace(/\D/g, '').slice(0, TOKEN_LENGTH)[index] || ''
+    );
     setToken(nextToken);
     clearError();
   };
@@ -40,7 +45,9 @@ export default function ProviderSessionPage() {
       return;
     }
 
-    setToken((current) => current.map((digit, currentIndex) => (currentIndex === index ? value : digit)));
+    setToken((current) =>
+      current.map((digit, currentIndex) => (currentIndex === index ? value : digit))
+    );
     clearError();
 
     if (value && index < TOKEN_LENGTH - 1) {
@@ -59,24 +66,24 @@ export default function ProviderSessionPage() {
     fillToken(event.clipboardData.getData('text'));
   };
 
-  const startSession = async (request, loadingSetter, fallbackMessage) => {
+  const redeemToken = async () => {
     const code = getCode();
     if (code.length !== TOKEN_LENGTH) {
       return;
     }
 
-    loadingSetter(true);
+    setIsSubmitting(true);
     clearError();
 
     try {
-      const response = await request(code);
-      saveClinicalSession(response);
+      const response = await config.startSession(code);
+      savePortalSession(response, config);
       refreshRecentSessions();
-      openClinicalSession(response);
+      openPortalSession(response);
     } catch (error) {
-      setErrorMessage(getTokenErrorMessage(error, fallbackMessage));
+      setErrorMessage(getTokenErrorMessage(error, 'Unable to redeem the token.'));
     } finally {
-      loadingSetter(false);
+      setIsSubmitting(false);
     }
   };
 
@@ -87,17 +94,21 @@ export default function ProviderSessionPage() {
       <main className="provider-session-content">
         <section className="provider-session-access-panel">
           <ProviderSessionTokenCard
+            title={config.tokenTitle}
+            description={config.tokenDescription}
+            submitLabel={config.submitButtonLabel}
+            submittingLabel={config.submittingLabel}
             token={token}
             errorMessage={errorMessage}
             isSubmitting={isSubmitting}
             onChange={handleTokenChange}
             onKeyDown={handleTokenKeyDown}
             onPaste={handleTokenPaste}
-            onSubmit={() => startSession(startClinicalSession, setIsSubmitting, 'Unable to start the clinical session.')}
+            onSubmit={redeemToken}
           />
         </section>
 
-        <RecentClinicalSessions sessions={recentSessions} onOpen={openClinicalSession} />
+        <RecentClinicalSessions sessions={recentSessions} onOpen={openPortalSession} />
       </main>
     </div>
   );

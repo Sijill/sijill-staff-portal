@@ -3,6 +3,7 @@ import { Form, Button, InputGroup, Alert } from 'react-bootstrap';
 import { Link, useNavigate, createSearchParams } from 'react-router-dom';
 import AuthLayout from '../../Components/AuthLayout';
 import { login } from '../../api/authApi';
+import { getLoginErrorMessage } from '../../utils/sessionErrorMessages';
 
 /* ===== Icons ===== */
 const EyeIcon = () => (
@@ -63,7 +64,7 @@ const LoginPage = () => {
 
       navigate(`/otp-verification?${query}`);
     } catch (error) {
-      setErrorMessage(error.message || 'Login failed. Please try again.');
+      setErrorMessage(getLoginErrorMessage(error));
     } finally {
       setIsSubmitting(false);
     }
