@@ -32,37 +32,41 @@ function buildDetailItem(label, value) {
   };
 }
 
-export function buildLabOrderSection(order = {}) {
+export function buildLabOrderSection(order) {
+  const safeOrder = order ?? {};
+
   return {
     title: 'Lab Order Details',
     icon: FlaskConical,
     items: [
-      buildDetailItem('Test Type', findOptionLabel(TEST_TYPE_OPTIONS, order.testType ?? order.testTypeId)),
-      buildDetailItem('Specimen Type', findOptionLabel(SPECIMEN_TYPE_OPTIONS, order.specimenType ?? order.specimenTypeId)),
-      buildDetailItem('Priority', formatEnumLabel(order.priority)),
-      buildDetailItem('Fasting Required', order.fastingRequired ? 'Yes' : 'No'),
-      buildDetailItem('Clinical Indication', order.clinicalIndication || order.indication),
-      buildDetailItem('Ordered By', order.orderedBy),
+      buildDetailItem('Test Type', findOptionLabel(TEST_TYPE_OPTIONS, safeOrder.testType ?? safeOrder.testTypeId)),
+      buildDetailItem('Specimen Type', findOptionLabel(SPECIMEN_TYPE_OPTIONS, safeOrder.specimenType ?? safeOrder.specimenTypeId)),
+      buildDetailItem('Priority', formatEnumLabel(safeOrder.priority)),
+      buildDetailItem('Fasting Required', safeOrder.fastingRequired ? 'Yes' : 'No'),
+      buildDetailItem('Clinical Indication', safeOrder.clinicalIndication || safeOrder.indication),
+      buildDetailItem('Ordered By', safeOrder.orderedBy),
     ],
   };
 }
 
-export function buildImagingOrderSection(order = {}) {
+export function buildImagingOrderSection(order) {
+  const safeOrder = order ?? {};
+
   return {
     title: 'Imaging Order Details',
     icon: ScanLine,
     items: [
-      buildDetailItem('Imaging Type', findOptionLabel(IMAGING_TYPE_OPTIONS, order.imagingType ?? order.imagingTypeId)),
-      buildDetailItem('Body Part', findOptionLabel(BODY_PART_OPTIONS, order.bodyPart ?? order.bodyPartId)),
-      buildDetailItem('Priority', formatEnumLabel(order.priority)),
-      buildDetailItem('Contrast Used', order.contrastUsed ? 'Yes' : 'No'),
-      buildDetailItem('Clinical Indication', order.clinicalIndication || order.indication),
-      buildDetailItem('Ordered By', order.orderedBy),
+      buildDetailItem('Imaging Type', findOptionLabel(IMAGING_TYPE_OPTIONS, safeOrder.imagingType ?? safeOrder.imagingTypeId)),
+      buildDetailItem('Body Part', findOptionLabel(BODY_PART_OPTIONS, safeOrder.bodyPart ?? safeOrder.bodyPartId)),
+      buildDetailItem('Priority', formatEnumLabel(safeOrder.priority)),
+      buildDetailItem('Contrast Used', safeOrder.contrastUsed ? 'Yes' : 'No'),
+      buildDetailItem('Clinical Indication', safeOrder.clinicalIndication || safeOrder.indication),
+      buildDetailItem('Ordered By', safeOrder.orderedBy),
     ],
   };
 }
 
-export function buildPatientIdentitySection(identity = {}) {
+export function buildPatientIdentitySection(identity) {
   const basicInfo = identity?.basicInfo ?? identity ?? {};
 
   return {
