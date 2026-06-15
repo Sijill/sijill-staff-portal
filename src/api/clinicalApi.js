@@ -27,11 +27,19 @@ export function updatePatientVitals(sessionId, payload, clinicalSessionToken) {
   );
 }
 
-export function getMedicalHistory(sessionId, clinicalSessionToken, params = {}) {
-  return api.get(`/clinical/sessions/${sessionId}/medical-history`, {
+// export function getMedicalHistory(sessionId, clinicalSessionToken, params = {}) {
+//   return api.get(`/clinical/sessions/${sessionId}/medical-history`, {
+//     ...buildClinicalHeaders(clinicalSessionToken),
+//     params,
+//   });
+// }
+
+export async function getMedicalHistory(sessionId, clinicalSessionToken, params = {}) {
+  const response = await api.get(`/clinical/sessions/${sessionId}/medical-history`, {
     ...buildClinicalHeaders(clinicalSessionToken),
     params,
   });
+  return response.data; // { data: [...], pagination: {...} }
 }
 
 export function getEncounterDetail(sessionId, encounterId, clinicalSessionToken) {
