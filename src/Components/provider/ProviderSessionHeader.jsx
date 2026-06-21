@@ -3,7 +3,7 @@ import { Button, Container } from 'react-bootstrap';
 import { MoveLeft, UserRound } from 'lucide-react';
 import PatientSessionSteps from './PatientSessionSteps';
 import sijillLogo from '../../assets/logo_light-removebg.png';
-
+import { Link } from 'react-router-dom';
 const headerStyles = {
   wrapper: {
     borderBottom: '1px solid rgba(22, 52, 55, 0.1)',
@@ -51,13 +51,14 @@ const ProviderSessionHeader = ({ onBack, showSteps = false }) => {
           </div>
 
           {showSteps ? <PatientSessionSteps /> : null}
-
+          <Link to="/">
           <img
             src={sijillLogo}
             alt="Sijill"
             style={headerStyles.logo}
             className="flex-shrink-0 order-2 order-md-3"
           />
+          </Link>
         </div>
       </Container>
     </header>

@@ -35,7 +35,7 @@ export default function ProviderSessionTokenCard({
             value={digit}
             onChange={(event) => onChange(index, event.target.value)}
             onKeyDown={(event) => onKeyDown(index, event)}
-            onPaste={onPaste}
+            onPasteCapture={(event) => onPaste(index, event)}
             aria-label={`Permission token digit ${index + 1}`}
           />
         ))}

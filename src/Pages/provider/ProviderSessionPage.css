@@ -34,7 +34,7 @@ body {
 .provider-session-access-panel {
   display: grid;
   grid-template-columns: minmax(320px, 385px) minmax(320px, 420px);
-  justify-content: center;
+  justify-content: right;
   gap: 1.25rem;
   margin-bottom: 5rem;
 }

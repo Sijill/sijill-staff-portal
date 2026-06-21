@@ -8,7 +8,11 @@ import {
   verifyRegistrationOtp,
 } from '../../api/authApi';
 import { getPortalConfigByRole } from '../../constants/portalSessionConfig';
+import { saveAuthenticatedRole } from '../../utils/authSession';
 import { getAccountStatusMessage } from '../../utils/sessionErrorMessages';
+import { fillTokenArray, normalizeTokenDigits } from '../../utils/tokenInput';
+
+const OTP_LENGTH = 6;
 
 const OTPVerification = ({ email = 'example@email.com' }) => {
   const navigate = useNavigate();
@@ -17,11 +21,9 @@ const OTPVerification = ({ email = 'example@email.com' }) => {
   const mode = params.get('mode') || 'registration';
   const registrationSessionId = params.get('registrationSessionId');
   const loginSessionId = params.get('loginSessionId');
-  const registrationType = params.get('registrationType') || '';
-  const entityType = params.get('entityType') || '';
   const targetEmail = params.get('email') || email;
 
-  const [otp, setOtp] = useState(['', '', '', '', '', '']);
+  const [otp, setOtp] = useState(Array(OTP_LENGTH).fill(''));
   const [timer, setTimer] = useState(120);
   const [canResend, setCanResend] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
@@ -32,21 +34,54 @@ const OTPVerification = ({ email = 'example@email.com' }) => {
   /* =====================
      OTP INPUT
   ====================== */
+  const focusOtpInput = (index) => {
+    document.getElementById(`otp-${index}`)?.focus();
+  };
+
   const handleChange = (index, value) => {
-    if (!/^\d?$/.test(value)) return;
+    const digits = normalizeTokenDigits(value, OTP_LENGTH);
+
+    if (!digits.length) {
+      setOtp((current) => current.map((digit, currentIndex) => (currentIndex === index ? '' : digit)));
+      return;
+    }
+
+    if (digits.length > 1) {
+      const { nextValues } = fillTokenArray(otp, digits.join(''), index, OTP_LENGTH);
+      setOtp(nextValues);
+      if (index + digits.length < OTP_LENGTH) {
+        focusOtpInput(index + digits.length);
+      }
+      return;
+    }
 
     const newOtp = [...otp];
-    newOtp[index] = value;
+    newOtp[index] = digits[0];
     setOtp(newOtp);
 
-    if (value && index < 5) {
-      document.getElementById(`otp-${index + 1}`)?.focus();
+    if (index < OTP_LENGTH - 1) {
+      focusOtpInput(index + 1);
     }
   };
 
   const handleOtpKeyDown = (index, event) => {
     if (event.key === 'Backspace' && !otp[index] && index > 0) {
-      document.getElementById(`otp-${index - 1}`)?.focus();
+      focusOtpInput(index - 1);
+    }
+  };
+
+  const handlePaste = (index, event) => {
+    event.preventDefault();
+
+    const pastedText = event.clipboardData.getData('text');
+    const { nextValues, digits } = fillTokenArray(otp, pastedText, index, OTP_LENGTH);
+
+    if (digits.length === 0) return;
+
+    setOtp(nextValues);
+
+    if (index + digits.length < OTP_LENGTH) {
+      focusOtpInput(index + digits.length);
     }
   };
 
@@ -83,6 +118,9 @@ const OTPVerification = ({ email = 'example@email.com' }) => {
 
         if (response.accessToken) {
           localStorage.setItem('accessToken', response.accessToken);
+        }
+        if (response.role) {
+          saveAuthenticatedRole(response.role);
         }
 
         setSuccessMessage(response.message || 'Login successful.');
@@ -198,6 +236,7 @@ const OTPVerification = ({ email = 'example@email.com' }) => {
                         value={digit}
                         onChange={(e) => handleChange(index, e.target.value)}
                         onKeyDown={(event) => handleOtpKeyDown(index, event)}
+                        onPasteCapture={(event) => handlePaste(index, event)}
                         maxLength={1}
                         className="text-center fs-4"
                         style={{

@@ -98,7 +98,7 @@ const LoginPage = () => {
           <Form.Label className="small fw-bold text-secondary">Email Address</Form.Label>
           <Form.Control
             type="email"
-            placeholder="admin@ehr.com"
+            placeholder="HCP@example.com"
             className="py-2 border-light-subtle shadow-sm"
             value={email}
             onChange={(e) => setEmail(e.target.value)}

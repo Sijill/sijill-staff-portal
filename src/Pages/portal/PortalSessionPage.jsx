@@ -11,6 +11,7 @@ import {
   savePortalSession,
 } from '../../utils/portalSession';
 import { getTokenErrorMessage } from '../../utils/sessionErrorMessages';
+import { normalizeTokenDigits } from '../../utils/tokenInput';
 
 const emptyToken = () => Array(TOKEN_LENGTH).fill('');
 
@@ -32,38 +33,60 @@ export default function PortalSessionPage({ config }) {
   const clearError = () => setErrorMessage('');
   const getCode = () => token.join('');
 
-  const fillToken = (value) => {
-    const nextToken = emptyToken().map(
-      (_, index) => value.replace(/\D/g, '').slice(0, TOKEN_LENGTH)[index] || ''
-    );
-    setToken(nextToken);
+  const focusTokenInput = (index) => {
+    document.getElementById(`permission-token-${index}`)?.focus();
+  };
+
+  const fillToken = (value, startIndex = 0) => {
+    const digits = normalizeTokenDigits(value, TOKEN_LENGTH - startIndex);
+
+    setToken((current) => {
+      const nextValues = [...current];
+
+      digits.forEach((digit, offset) => {
+        nextValues[startIndex + offset] = digit;
+      });
+
+      return nextValues;
+    });
     clearError();
+
+    if (digits.length > 0 && startIndex + digits.length < TOKEN_LENGTH) {
+      queueMicrotask(() => focusTokenInput(startIndex + digits.length));
+    }
   };
 
   const handleTokenChange = (index, value) => {
-    if (!/^\d?$/.test(value)) {
+    const digits = normalizeTokenDigits(value, TOKEN_LENGTH);
+
+    if (!digits.length) {
+      setToken((current) => current.map((digit, currentIndex) => (currentIndex === index ? '' : digit)));
+      clearError();
       return;
     }
 
-    setToken((current) =>
-      current.map((digit, currentIndex) => (currentIndex === index ? value : digit))
-    );
+    if (digits.length > 1) {
+      fillToken(digits.join(''), index);
+      return;
+    }
+
+    setToken((current) => current.map((digit, currentIndex) => (currentIndex === index ? digits[0] : digit)));
     clearError();
 
-    if (value && index < TOKEN_LENGTH - 1) {
-      document.getElementById(`permission-token-${index + 1}`)?.focus();
+    if (index < TOKEN_LENGTH - 1) {
+      focusTokenInput(index + 1);
     }
   };
 
   const handleTokenKeyDown = (index, event) => {
     if (event.key === 'Backspace' && !token[index] && index > 0) {
-      document.getElementById(`permission-token-${index - 1}`)?.focus();
+      focusTokenInput(index - 1);
     }
   };
 
-  const handleTokenPaste = (event) => {
+  const handleTokenPaste = (index, event) => {
     event.preventDefault();
-    fillToken(event.clipboardData.getData('text'));
+    fillToken(event.clipboardData.getData('text'), index);
   };
 
   const redeemToken = async () => {
