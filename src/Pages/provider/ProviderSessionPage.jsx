@@ -9,11 +9,13 @@ import { startClinicalSession } from '../../api/clinicalApi';
 import { buildClinicalRouteState, getRecentClinicalSessions, saveClinicalSession } from '../../utils/clinicalSession';
 import { getTokenErrorMessage } from '../../utils/sessionErrorMessages';
 import { normalizeTokenDigits } from '../../utils/tokenInput';
+import { useToast } from '../../context/ToastContext';
 
 const emptyToken = () => Array(TOKEN_LENGTH).fill('');
 
 export default function ProviderSessionPage() {
   const navigate = useNavigate();
+  const { addToast, updateToast } = useToast();
   const [token, setToken] = useState(emptyToken);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
@@ -39,11 +41,9 @@ export default function ProviderSessionPage() {
 
     setToken((current) => {
       const nextValues = [...current];
-
       digits.forEach((digit, offset) => {
         nextValues[startIndex + offset] = digit;
       });
-
       return nextValues;
     });
     clearError();
@@ -95,13 +95,30 @@ export default function ProviderSessionPage() {
     loadingSetter(true);
     clearError();
 
+    const loadingId = addToast('loading', 'Starting Session…', { message: 'Verifying patient token.' });
+
     try {
       const response = await request(code);
       saveClinicalSession(response);
       refreshRecentSessions();
+
+      updateToast(loadingId, {
+        type: 'success',
+        title: 'Session Started',
+        message: 'Patient verified. Loading medical identity…',
+        duration: 3000,
+      });
+
       openClinicalSession(response);
     } catch (error) {
-      setErrorMessage(getTokenErrorMessage(error, fallbackMessage));
+      const msg = getTokenErrorMessage(error, fallbackMessage);
+      setErrorMessage(msg);
+      updateToast(loadingId, {
+        type: 'error',
+        title: 'Session Failed',
+        message: msg,
+        duration: 7000,
+      });
     } finally {
       loadingSetter(false);
     }

@@ -1,7 +1,7 @@
 import React from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { Button, Col, Container, Row } from 'react-bootstrap';
-import { SquarePen, UserRound } from 'lucide-react';
+import { SquarePen } from 'lucide-react';
 import ProviderSessionHeader from './ProviderSessionHeader';
 import { getProviderSessionBackPath, isProviderSessionStepPath } from './providerSessionFlow';
 
@@ -24,7 +24,7 @@ const surfaceStyles = {
 };
 
 const ProviderSessionLayout = ({ patient, stats = [], onBack, children }) => {
-  
+
   const navigate = useNavigate();
   const { pathname, state } = useLocation();
   const hasPatient = Boolean(patient?.name || patient?.meta);
@@ -49,17 +49,27 @@ const ProviderSessionLayout = ({ patient, stats = [], onBack, children }) => {
             {hasPatient ? (
               <div className="d-flex align-items-center gap-3 mb-4">
                 <div
-                  className="d-inline-flex align-items-center justify-content-center rounded-4"
+                  className="d-inline-flex align-items-center justify-content-center rounded-circle overflow-hidden flex-shrink-0"
                   style={{
                     width: '56px',
                     height: '56px',
                     background: '#e9fbfd',
-                    color: '#1f5d63',
                     boxShadow: '0 12px 22px rgba(38, 92, 99, 0.09)',
                   }}
                   aria-hidden="true"
                 >
-                  <UserRound size={30} strokeWidth={1.9} />
+                  {patient.imageUrl ? (
+                    <img
+                      src={patient.imageUrl}
+                      alt=""
+                      aria-hidden="true"
+                      style={{
+                        width: '100%',
+                        height: '100%',
+                        objectFit: 'cover',
+                      }}
+                    />
+                  ) : null}
                 </div>
 
                 <div>

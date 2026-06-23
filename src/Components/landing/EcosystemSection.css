@@ -1,0 +1,339 @@
+/* ===== ECOSYSTEM SECTION ===== */
+.ecosystem-section {
+  position: relative;
+  padding: 100px 24px;
+  background: linear-gradient(180deg, #071528 0%, #0a1f38 100%);
+  overflow: hidden;
+}
+
+.ecosystem-section::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(0, 242, 254, 0.3), transparent);
+}
+
+.ecosystem-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 56px;
+  align-items: center;
+}
+
+/* Header */
+.ecosystem-header {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+}
+
+.section-badge.teal {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 7px 18px;
+  border-radius: 100px;
+  background: rgba(0, 242, 254, 0.08);
+  border: 1px solid rgba(0, 242, 254, 0.25);
+  color: var(--color-accent-teal);
+  font-size: 0.82rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+}
+
+.ecosystem-title {
+  font-family: var(--font-title);
+  font-size: clamp(2rem, 5vw, 3rem);
+  font-weight: 800;
+  color: #fff;
+  line-height: 1.25;
+  margin: 0;
+}
+
+.ecosystem-title-gradient {
+  background: linear-gradient(135deg, var(--color-accent-teal), #7c3aed);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.ecosystem-subtitle {
+  max-width: 680px;
+  font-size: 1.1rem;
+  line-height: 1.8;
+  color: var(--color-text-subtle);
+  margin: 0;
+}
+
+/* Tabs */
+.ecosystem-tabs {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.ecosystem-tab {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px 28px;
+  background: rgba(255,255,255,0.03);
+  border: 1.5px solid rgba(255,255,255,0.08);
+  border-radius: 16px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  color: rgba(255,255,255,0.6);
+  font-family: var(--font-body);
+}
+
+.ecosystem-tab:hover {
+  background: rgba(255,255,255,0.06);
+  border-color: rgba(255,255,255,0.15);
+  color: #fff;
+  transform: translateY(-3px);
+}
+
+.ecosystem-tab.active {
+  background: rgba(var(--tab-color), 0.08);
+  border-color: var(--tab-color, var(--color-accent-teal));
+  color: #fff;
+  box-shadow: 0 8px 30px rgba(0,0,0,0.3), 0 0 0 1px var(--tab-color, rgba(0,242,254,0.3));
+}
+
+.tab-icon {
+  font-size: 1.6rem;
+  line-height: 1;
+}
+
+.tab-text {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 2px;
+}
+
+.tab-tag {
+  font-size: 0.7rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  opacity: 0.6;
+}
+
+.tab-title {
+  font-size: 1rem;
+  font-weight: 700;
+}
+
+/* Detail Card */
+.ecosystem-detail {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr 1.6fr;
+  gap: 40px;
+  padding: 48px;
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 24px;
+  position: relative;
+  overflow: hidden;
+  animation: fadeInUp 0.4s ease both;
+  border-top: 2px solid var(--project-color, var(--color-accent-teal));
+}
+
+.detail-glow {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.ecosystem-detail-info {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  position: relative;
+  z-index: 1;
+}
+
+.detail-icon-wrap {
+  width: 72px;
+  height: 72px;
+  border-radius: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2rem;
+}
+
+.detail-tags {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.detail-tag {
+  padding: 5px 14px;
+  border-radius: 100px;
+  font-size: 0.78rem;
+  font-weight: 600;
+}
+
+.detail-title {
+  font-family: var(--font-title);
+  font-size: 1.8rem;
+  font-weight: 800;
+  color: #fff;
+  margin: 0;
+  line-height: 1.2;
+}
+
+.detail-subtitle {
+  font-size: 1rem;
+  line-height: 1.7;
+  color: rgba(255,255,255,0.5);
+  margin: 0;
+}
+
+/* Features */
+.ecosystem-detail-features {
+  position: relative;
+  z-index: 1;
+}
+
+.features-heading {
+  font-family: var(--font-title);
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: rgba(255,255,255,0.4);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin: 0 0 20px;
+}
+
+.features-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+}
+
+.feature-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+  background: rgba(255,255,255,0.03);
+  border-radius: 12px;
+  border: 1px solid rgba(255,255,255,0.05);
+  font-size: 0.875rem;
+  color: rgba(255,255,255,0.7);
+  transition: all 0.2s ease;
+}
+
+.feature-item:hover {
+  background: rgba(255,255,255,0.06);
+  color: #fff;
+}
+
+.feature-check {
+  width: 24px;
+  height: 24px;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.75rem;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+/* Flow diagram */
+.ecosystem-flow {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  justify-content: center;
+  padding: 28px 40px;
+  background: rgba(255,255,255,0.02);
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 20px;
+  width: 100%;
+}
+
+.flow-step {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 16px;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 14px;
+  min-width: 80px;
+  transition: all 0.2s ease;
+}
+
+.flow-step:hover {
+  background: rgba(0,242,254,0.06);
+  border-color: rgba(0,242,254,0.2);
+}
+
+.flow-step.flow-center-step {
+  background: rgba(0,242,254,0.06);
+  border-color: rgba(0,242,254,0.3);
+}
+
+.flow-icon {
+  font-size: 1.8rem;
+  line-height: 1;
+}
+
+.flow-icon.glow {
+  filter: drop-shadow(0 0 8px rgba(0,242,254,0.6));
+}
+
+.flow-label {
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: rgba(255,255,255,0.5);
+  text-align: center;
+  white-space: nowrap;
+}
+
+.flow-arrow {
+  font-size: 1.2rem;
+  color: rgba(0,242,254,0.5);
+  font-weight: 300;
+}
+
+@media (max-width: 992px) {
+  .ecosystem-detail {
+    grid-template-columns: 1fr;
+    padding: 32px 24px;
+  }
+  .features-list {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 576px) {
+  .ecosystem-tabs {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .flow-arrow {
+    transform: rotate(90deg);
+  }
+  .ecosystem-flow {
+    flex-direction: column;
+  }
+}

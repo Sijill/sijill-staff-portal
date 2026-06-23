@@ -1,0 +1,223 @@
+/* ===== AI SECTION ===== */
+.ai-section {
+  position: relative;
+  padding: 100px 24px;
+  background: linear-gradient(180deg, #0a1f38 0%, #0d0b2e 100%);
+  overflow: hidden;
+}
+
+.ai-section::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(124, 58, 237, 0.5), transparent);
+}
+
+.ai-orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(120px);
+  pointer-events: none;
+}
+
+.ai-orb-1 {
+  width: 600px;
+  height: 600px;
+  background: radial-gradient(circle, rgba(124, 58, 237, 0.15) 0%, transparent 70%);
+  top: -100px;
+  right: -100px;
+  animation: float 12s ease-in-out infinite;
+}
+
+.ai-orb-2 {
+  width: 400px;
+  height: 400px;
+  background: radial-gradient(circle, rgba(0, 242, 254, 0.1) 0%, transparent 70%);
+  bottom: -80px;
+  left: -80px;
+  animation: float 9s ease-in-out infinite alternate;
+}
+
+.ai-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 64px;
+  align-items: center;
+  position: relative;
+  z-index: 2;
+}
+
+/* Left */
+.ai-left {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.section-badge.purple {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 7px 18px;
+  border-radius: 100px;
+  background: rgba(124, 58, 237, 0.1);
+  border: 1px solid rgba(124, 58, 237, 0.3);
+  color: #a78bfa;
+  font-size: 0.82rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  width: fit-content;
+}
+
+.ai-badge-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #7c3aed;
+  animation: pulse-glow 2s infinite;
+}
+
+.ai-title {
+  font-family: var(--font-title);
+  font-size: clamp(2rem, 4vw, 2.8rem);
+  font-weight: 900;
+  color: #fff;
+  line-height: 1.2;
+  margin: 0;
+}
+
+.ai-title-gradient {
+  background: linear-gradient(135deg, #a78bfa 0%, #00f2fe 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.ai-description {
+  font-size: 1rem;
+  line-height: 1.85;
+  color: rgba(255, 255, 255, 0.6);
+  margin: 0;
+}
+
+/* Chips */
+.ai-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.ai-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 14px;
+  border-radius: 100px;
+  background: rgba(124, 58, 237, 0.08);
+  border: 1px solid rgba(124, 58, 237, 0.25);
+  color: #c4b5fd;
+  font-size: 0.8rem;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.chip-dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: #7c3aed;
+  flex-shrink: 0;
+}
+
+/* Arrow badge */
+.ai-arrow-badge {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px 24px;
+  background: linear-gradient(135deg, rgba(124, 58, 237, 0.1), rgba(0, 242, 254, 0.05));
+  border: 1px solid rgba(124, 58, 237, 0.25);
+  border-radius: 14px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.ai-arrow-badge > span:first-child {
+  font-size: 1.4rem;
+  color: var(--color-accent-teal);
+}
+
+.ai-result-badge {
+  margin-right: auto;
+  padding: 4px 12px;
+  background: rgba(0, 242, 254, 0.1);
+  border: 1px solid rgba(0, 242, 254, 0.3);
+  border-radius: 100px;
+  font-size: 0.78rem;
+  color: var(--color-accent-teal);
+  font-weight: 700;
+}
+
+/* Right — Capabilities */
+.ai-right {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.ai-capability-card {
+  display: flex;
+  align-items: flex-start;
+  gap: 18px;
+  padding: 22px 24px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 16px;
+  transition: all 0.3s ease;
+  cursor: default;
+}
+
+.ai-capability-card:hover {
+  background: rgba(124, 58, 237, 0.06);
+  border-color: rgba(124, 58, 237, 0.25);
+  transform: translateX(-6px);
+  box-shadow: 0 12px 40px rgba(0,0,0,0.2);
+}
+
+.ai-cap-icon {
+  font-size: 1.8rem;
+  line-height: 1;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.ai-cap-body {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.ai-cap-title {
+  font-family: var(--font-title);
+  font-size: 1rem;
+  font-weight: 700;
+  color: #fff;
+  margin: 0;
+}
+
+.ai-cap-desc {
+  font-size: 0.875rem;
+  line-height: 1.7;
+  color: rgba(255, 255, 255, 0.5);
+  margin: 0;
+}
+
+@media (max-width: 992px) {
+  .ai-container {
+    grid-template-columns: 1fr;
+  }
+}

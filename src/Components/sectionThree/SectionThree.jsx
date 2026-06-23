@@ -31,12 +31,16 @@ export default function SectionThree() {
   ];
 
   return (
-    <section className="section-three py-5 bg-light">
-      <Container>
+    <section className="section-three position-relative overflow-hidden py-5">
+      {/* Background Animated Nodes */}
+      <div className="security-bg-node node-1"></div>
+      <div className="security-bg-node node-2"></div>
+
+      <Container className="position-relative" style={{ zIndex: 2 }}>
         {/* Header Section */}
-        <div className="text-center mb-5">
-          <h2 className="fw-bold display-6">Trust & Security</h2>
-          <p className="text-muted mx-auto" style={{ maxWidth: '600px' }}>
+        <div className="text-center mb-5 animate-fade-in-up">
+          <h2 className="fw-bold section-three-title">Trust & Security</h2>
+          <p className="section-three-subtitle mx-auto">
             Your security and privacy are our highest priorities
           </p>
         </div>
@@ -49,17 +53,21 @@ export default function SectionThree() {
               icon={card.icon}
               title={card.title}
               description={card.description}
+              delayClass={`delay-${(index % 2) + 1}`}
             />
           ))}
         </Row>
 
-        {/* Bottom Highlight Card */}
-        <Row className="justify-content-center mt-4">
+        {/* Bottom Highlight Card with Shimmer Effect */}
+        <Row className="justify-content-center mt-5 animate-fade-in-up delay-3">
           <Col lg={10}>
-            <Card className="border shadow-sm p-4 text-center rounded-4 bg-white">
-              <div className="display-4 mb-2">🛡️</div>
-              <Card.Title className="fw-bold">Certified & Secure</Card.Title>
-              <Card.Text className="text-muted px-md-5">
+            <Card className="border-0 shadow security-highlight-card p-5 text-center rounded-4 overflow-hidden position-relative">
+              {/* Shimmer Effect overlay */}
+              <div className="shimmer-overlay"></div>
+              
+              <div className="display-3 mb-3 float-icon">🛡️</div>
+              <Card.Title className="fw-bold h3 text-white mb-3">Certified & Secure</Card.Title>
+              <Card.Text className="highlight-text px-md-5">
                 Sijill adheres to the highest standards of healthcare data security and privacy
                 protection, ensuring your information is safe.
               </Card.Text>

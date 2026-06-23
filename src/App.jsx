@@ -1,4 +1,5 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { ToastProvider } from './context/ToastContext';
 import './App.css';
 import ProtectedRoute from './Components/routing/ProtectedRoute';
 import ErrorPage from './Pages/ErrorPage';
@@ -28,7 +29,7 @@ import { PORTAL_TYPES } from './constants/portalSessionConfig';
 import { USER_ROLES } from './utils/authSession';
 function App() {
   return (
-    <>
+    <ToastProvider position="bottom-right">
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<LandingPage />} />
@@ -187,7 +188,7 @@ function App() {
           <Route path="*" element={<ErrorPage />} />
         </Routes>
       </BrowserRouter>
-    </>
+    </ToastProvider>
   );
 }
 

@@ -58,11 +58,28 @@ export default function PortalOrderPatientView({ config }) {
   }, [config.uploadKind, identity, order]);
 
   const stats = buildStats(identity?.basicInfo ?? identity ?? {});
+  const patientWithImage = useMemo(
+    () => ({
+      ...patient,
+      imageUrl:
+        identity?.patient?.profilePictureUrl ??
+        identity?.patient?.profile_picture_url ??
+        identity?.patient?.avatarUrl ??
+        identity?.patient?.imageUrl ??
+        identity?.profilePictureUrl ??
+        identity?.profile_picture_url ??
+        identity?.avatarUrl ??
+        identity?.imageUrl ??
+        patient?.imageUrl ??
+        '',
+    }),
+    [identity, patient]
+  );
 
   return (
     <>
       <ProviderSessionLayout
-        patient={patient}
+        patient={patientWithImage}
         stats={stats}
         onBack={() => navigate(config.tokenEntryPath)}
       >

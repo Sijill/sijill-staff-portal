@@ -11,7 +11,7 @@ import { BLOOD_TYPE_OPTIONS } from '../../constants/medicalConstants';
 import { saveClinicalSession } from '../../utils/clinicalSession';
 import buildMedicalIdentitySections from './medicalIdentitySections';
 import useProviderClinicalSession from './useProviderClinicalSession';
-import { canWriteClinicalSession } from './providerSessionUtils';
+import { canWriteClinicalSession, resolvePatientImageUrl } from './providerSessionUtils';
 
 export default function PatientMedicalIdentity() {
   const navigate = useNavigate();
@@ -48,6 +48,18 @@ export default function PatientMedicalIdentity() {
   const basicInfo = identity?.basicInfo ?? {};
   const sections = useMemo(() => buildMedicalIdentitySections(identity), [identity]);
   const stats = buildStats(basicInfo, canEditVitals, setModal);
+  const patientWithImage = useMemo(
+    () => ({
+      ...patient,
+      imageUrl:
+        resolvePatientImageUrl(clinicalSession?.patient) ||
+        resolvePatientImageUrl(identity?.patient) ||
+        resolvePatientImageUrl(identity?.patientInfo) ||
+        resolvePatientImageUrl(identity?.basicInfo) ||
+        resolvePatientImageUrl(identity),
+    }),
+    [clinicalSession?.patient, identity, patient]
+  );
 
   const handleVitalsUpdate = async (payload) => {
     setIsSaving(true);
@@ -77,7 +89,7 @@ export default function PatientMedicalIdentity() {
 
   return (
     <>
-      <ProviderSessionLayout patient={patient} stats={stats} onBack={() => navigate('/provider-session')}>
+      <ProviderSessionLayout patient={patientWithImage} stats={stats} onBack={() => navigate('/provider-session')}>
         {isLoading ? (
           <ProviderStatusMessage icon={LoaderCircle} message="Loading medical identity..." tone="info" className="py-5" />
         ) : (

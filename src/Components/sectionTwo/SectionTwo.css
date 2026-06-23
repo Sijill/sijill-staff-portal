@@ -1,54 +1,104 @@
 .section-two {
-  padding: 300px;
-  background-color: #f9fafb;
-  display: flex;
-  flex-direction: column;
+  padding: 90px 0;
+  background-color: #f8fafc;
+  background-image: 
+    radial-gradient(at 0% 100%, rgba(0, 242, 254, 0.05) 0, transparent 40%),
+    radial-gradient(at 100% 0%, rgba(30, 99, 243, 0.03) 0, transparent 40%);
+  position: relative;
+  overflow: hidden;
 }
 
 /* Title */
 .section-two__title {
-  font-size: 36px;
+  font-family: var(--font-title);
+  font-size: 2.5rem;
+  color: var(--color-primary-dark);
+  font-weight: 800;
   margin-bottom: 12px;
 }
 
 /* Subtitle */
 .section-two__subtitle {
-  font-size: 18px;
-  color: #4b5563;
+  font-size: 1.1rem;
+  color: #475569;
   max-width: 650px;
+  font-weight: 500;
 }
 
+/* Feature Card */
 .feature-card {
-  background: linear-gradient(135deg, #d0f0ff, #eaf6ff);
-  border-radius: 16px;
-  padding: 30px;
-  height: 100%;
+  background: linear-gradient(135deg, #ffffff 0%, #e0f2fe 100%); /* White to soft cyan/blue */
+  border: 1px solid rgba(14, 165, 233, 0.15);
+  border-radius: 20px;
+  padding: 40px 30px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.04);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  overflow: hidden;
+  z-index: 2;
 }
 
-/* Icon Box */
-.feature-icon {
-  width: 56px;
-  height: 56px;
-  background-color: #1e63f3;
-  color: #ffffff;
-  font-size: 26px;
-  border-radius: 12px;
+/* Hover Accent Bar */
+.hover-accent-bar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 4px;
+  background: linear-gradient(90deg, var(--color-accent-teal) 0%, var(--color-accent-blue) 100%);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
 
+/* Card Hover States */
+.feature-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 20px 40px rgba(0, 242, 254, 0.15), 0 8px 16px rgba(14, 165, 233, 0.05);
+  border-color: rgba(0, 242, 254, 0.4);
+}
+
+.feature-card:hover .hover-accent-bar {
+  transform: scaleX(1);
+}
+
+/* Icon Box & Anim */
+.feature-icon {
+  width: 64px;
+  height: 64px;
+  background: linear-gradient(135deg, rgba(30, 99, 243, 0.12) 0%, rgba(0, 242, 254, 0.2) 100%);
+  font-size: 2.2rem;
+  border-radius: 16px;
   display: flex;
   align-items: center;
   justify-content: center;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.feature-card:hover .feature-icon {
+  transform: scale(1.15) rotate(8deg);
+  background: linear-gradient(135deg, rgba(30, 99, 243, 0.2) 0%, rgba(0, 242, 254, 0.35) 100%);
 }
 
 /* Card Text */
-.feature-card p {
-  margin-top: 12px;
-  color: #374151;
+.feature-card h5 {
+  color: var(--color-primary-dark);
+  font-size: 1.3rem;
+  letter-spacing: -0.01em;
+}
+
+.feature-card .description-text {
+  color: #475569;
+  font-size: 0.98rem;
   line-height: 1.6;
+  margin-top: 10px;
 }
 
 /* Responsive */
 @media (max-width: 768px) {
   .section-two__title {
-    font-size: 28px;
+    font-size: 2.1rem;
+  }
+  .section-two {
+    padding: 60px 0;
   }
 }

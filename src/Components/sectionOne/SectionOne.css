@@ -1,137 +1,183 @@
-/* Import fonts as per the design requirements */
-@import url('https://fonts.googleapis.com/css2?family=Merriweather:wght@700&family=Source+Sans+3:wght@400;600&display=swap');
-
 .section-one {
-  background-color: #0b4d7a; /* Exact deep blue from the image */
+  background-color: var(--color-primary-dark);
+  background-image: 
+    radial-gradient(at 0% 0%, rgba(12, 62, 102, 0.3) 0, transparent 50%), 
+    radial-gradient(at 50% 0%, rgba(30, 99, 243, 0.15) 0, transparent 50%),
+    radial-gradient(at 100% 0%, rgba(0, 242, 254, 0.1) 0, transparent 50%);
   min-height: 100vh;
   min-width: 100vw;
-  padding: 80px 20px;
-  font-family: 'Source Sans 3', sans-serif;
+  padding: 100px 20px;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Floating Background Orbs */
+.orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(120px);
+  z-index: 1;
+  opacity: 0.35;
+  mix-blend-mode: screen;
+  pointer-events: none;
+}
+
+.orb-1 {
+  width: 450px;
+  height: 450px;
+  background: radial-gradient(circle, var(--color-accent-teal) 0%, rgba(0, 242, 254, 0) 70%);
+  top: 10%;
+  left: -5%;
+  animation: float 8s ease-in-out infinite;
+}
+
+.orb-2 {
+  width: 550px;
+  height: 550px;
+  background: radial-gradient(circle, var(--color-accent-cyan) 0%, rgba(79, 172, 254, 0) 70%);
+  bottom: 5%;
+  right: -5%;
+  animation: float 10s ease-in-out infinite alternate;
+}
+
+.orb-3 {
+  width: 380px;
+  height: 380px;
+  background: radial-gradient(circle, rgba(30, 99, 243, 0.5) 0%, rgba(30, 99, 243, 0) 70%);
+  top: 30%;
+  left: 45%;
+  animation: float 12s ease-in-out infinite;
 }
 
 /* Logo Box */
 .logo-box {
-  width: 200px;
+  width: 140px;
+  height: 140px;
   display: flex;
   justify-content: center;
   align-items: center;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
-}
-
-/* Headline - Matching the Serif style in the image */
-.main-headline {
-  font-family: 'Merriweather', serif;
-  font-size: 2.8rem;
-  font-weight: 700;
-  line-height: 1.2;
-  letter-spacing: -0.01em;
-}
-
-/* Middle Description text */
-.description {
-  max-width: 620px;
-  font-size: 1.1rem;
-  line-height: 1.5;
-  opacity: 0.9;
-}
-
-/* The Glassmorphism Info Box */
-.info-box {
-  max-width: 750px;
-  background-color: rgba(255, 255, 255, 0.22); /* Semi-transparent white */
-  backdrop-filter: blur(10px); /* Frosted glass effect */
-  -webkit-backdrop-filter: blur(10px);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.25);
   border: 1px solid rgba(255, 255, 255, 0.2);
-  color: #ffffff;
+  transition: all 0.4s ease;
+}
+
+.logo-box:hover {
+  transform: scale(1.05) rotate(2deg);
+  box-shadow: 0 25px 50px rgba(0, 242, 254, 0.2);
+}
+
+/* Headline */
+.main-headline {
+  font-family: var(--font-title);
+  font-size: clamp(2rem, 5vw, 3.4rem);
+  font-weight: 800;
+  line-height: 1.25;
+  letter-spacing: -0.02em;
+}
+
+.text-gradient {
+  background: linear-gradient(135deg, #ffffff 40%, var(--color-accent-teal) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.text-gradient-secondary {
+  background: linear-gradient(135deg, var(--color-accent-cyan) 0%, #3b82f6 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Middle Description Text */
+.description {
+  max-width: 680px;
+  font-size: 1.15rem;
+  line-height: 1.6;
+  color: var(--color-text-subtle);
+  opacity: 0.95;
+}
+
+/* Enhanced Glassmorphism Info Box */
+.info-box {
+  max-width: 780px;
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+  color: #f1f5f9;
+  border-radius: 20px;
+  padding: 24px;
+  transition: all 0.3s ease;
+}
+
+.info-box:hover {
+  border-color: rgba(0, 242, 254, 0.3);
+  box-shadow: 0 20px 55px rgba(0, 242, 254, 0.1);
+  transform: translateY(-2px);
 }
 
 .info-box p {
-  font-size: 0.95rem;
-  letter-spacing: 0.02em;
+  font-size: 1rem;
+  letter-spacing: 0.01em;
+  line-height: 1.6;
 }
 
 /* Button Customization */
 .btn-login,
 .btn-register {
-  width: 180px;
-  padding: 10px 0;
-  border-radius: 12px !important; /* Matches the soft rounding in image */
+  width: 190px;
+  padding: 14px 0;
+  border-radius: 14px !important;
   font-size: 1.1rem;
-  transition: all 0.3s ease;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
 }
 
 .btn-login {
-  background-color: transparent !important;
+  background: linear-gradient(135deg, var(--color-accent-cyan) 0%, var(--color-accent-blue) 100%) !important;
   color: #ffffff !important;
-  border: 2px solid #ffffff !important;
+  border: none !important;
+  box-shadow: 0 4px 15px rgba(30, 99, 243, 0.3);
+}
+
+.btn-login:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 30px rgba(30, 99, 243, 0.55);
 }
 
 .btn-register {
-  background-color: transparent !important;
+  background: rgba(255, 255, 255, 0.06) !important;
   color: #ffffff !important;
-  border: 2px solid #ffffff !important;
+  border: 2px solid rgba(255, 255, 255, 0.25) !important;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
 }
 
-.btn-login:hover,
 .btn-register:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-  filter: brightness(1.05);
+  background: rgba(255, 255, 255, 0.12) !important;
+  border-color: var(--color-accent-teal) !important;
+  transform: translateY(-4px);
+  box-shadow: 0 12px 30px rgba(0, 242, 254, 0.25);
 }
 
-/* ********************************************** */
-/* Action Buttons Container */
-.d-flex.gap-4 {
-  margin-top: 1rem;
+.footer-note {
+  font-size: 0.95rem;
+  color: var(--color-text-subtle) !important;
+  opacity: 0.85;
 }
 
-/* Base button style to match image proportions */
-.btn-light,
-.btn-outline-light {
-  /* Vertical and Horizontal Padding */
-  padding: 12px 0px !important;
-
-  /* Width: set to a large fixed size like the image */
-  width: 220px;
-
-  /* Typography */
-  font-size: 1.25rem !important;
-  font-weight: 600 !important;
-  letter-spacing: 0.5px;
-
-  /* Border Radius */
-  border-radius: 12px !important;
-
-  /* Smooth interaction */
-  transition: all 0.2s ease-in-out;
-  display: inline-block;
-}
-
-/* Specific styling for the Solid White Login Button */
-.btn-light {
-  background-color: #ffffff !important;
-  color: #0b4d7a !important;
-  border: none !important;
-}
-
-/* Specific styling for the Outlined Register Button */
-.btn-outline-light {
-  background-color: transparent !important;
-  color: #ffffff !important;
-  border: 2px solid #ffffff !important;
-}
-
-/* Hover effects for that premium feel */
-.btn:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
-  filter: brightness(1.05);
-}
-
-/* Mobile Responsiveness: ensure they stack or shrink on small screens */
+/* Mobile Responsiveness */
 @media (max-width: 576px) {
-  .btn-light,
-  .btn-outline-light {
+  .btn-login,
+  .btn-register {
     width: 100%;
     max-width: 280px;
   }

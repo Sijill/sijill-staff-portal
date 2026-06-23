@@ -56,3 +56,12 @@ export function createEncounter(sessionId, payload, clinicalSessionToken) {
     buildClinicalHeaders(clinicalSessionToken)
   );
 }
+
+export function getPatientImage(patientAccessToken) {
+  return api.get('/patient/profile-picture', {
+    headers: {
+      Authorization: `Bearer ${patientAccessToken}`,
+    },
+    responseType: 'blob',
+  });
+}

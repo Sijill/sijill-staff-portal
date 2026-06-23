@@ -43,10 +43,10 @@ export default function SectionTwo() {
   ];
 
   return (
-    <section className="section-two">
+    <section className="section-two py-5">
       <div className="container">
         {/* Header */}
-        <div className="text-center mb-5">
+        <div className="text-center mb-5 animate-fade-in-up">
           <h2 className="fw-bold section-two__title">System Features</h2>
           <p className="section-two__subtitle mx-auto">
             A comprehensive platform designed for secure, efficient, and integrated healthcare
@@ -62,6 +62,7 @@ export default function SectionTwo() {
               icon={feature.icon}
               title={feature.title}
               description={feature.description}
+              delayClass={`delay-${(index % 3) + 1}`}
             />
           ))}
         </div>

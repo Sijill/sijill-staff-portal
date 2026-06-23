@@ -1,100 +1,121 @@
-/* Import fonts */
-@import url('https://fonts.googleapis.com/css2?family=Merriweather:wght@700&family=Source+Sans+3:wght@400;500;600&display=swap');
+/* HMS App Stylesheet */
 
-:root {
-  /* Color Palette */
-  --bg-primary: #0b4d7a;
-  --bg-secondary: #105b8e;
-  --text-main: #f4f7fb;
-  --text-muted: #cbd5e1;
-  --accent: #38bdf8; /* A bright sky blue for links/buttons */
-
-  /* Typography */
-  --font-heading: 'Merriweather', serif;
-  --font-body: 'Source Sans 3', sans-serif;
-
-  color-scheme: dark;
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-title);
+  color: var(--color-text-bright);
+  font-weight: 700;
 }
 
-* {
-  box-sizing: border-box;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+/* Glassmorphism Surface */
+.glass-surface {
+  background: var(--color-card-bg);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--color-glass-border);
+  box-shadow: 0 12px 40px 0 rgba(0, 0, 0, 0.3);
 }
 
-body {
-  margin: 0;
-  padding: 0;
-  background-color: var(--bg-primary);
-  color: var(--text-main);
-  font-family: var(--font-body);
-  line-height: 1.6; /* Improved readability */
-  min-height: 100vh;
+/* Premium Button Shine Animation Wrapper */
+.btn-shine-effect {
+  position: relative;
+  overflow: hidden;
 }
 
-#root {
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
+.btn-shine-effect::after {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -60%;
+  width: 30%;
+  height: 200%;
+  background: rgba(255, 255, 255, 0.25);
+  transform: rotate(30deg);
+  transition: none;
+  opacity: 0;
 }
 
-/* Typography Defaults */
-h1,
-h2,
-h3,
-h4 {
-  font-family: var(--font-heading);
-  margin-top: 2rem;
-  margin-bottom: 1rem;
-  line-height: 1.2;
-  color: #ffffff;
+.btn-shine-effect:hover::after {
+  left: 150%;
+  transition: all 0.75s ease-in-out;
+  opacity: 1;
 }
 
-h1 {
-  font-size: 2.5rem;
-}
-h2 {
-  font-size: 2rem;
+/* Animation utilities */
+.animate-fade-in-up {
+  animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
-p {
-  margin-bottom: 1.25rem;
-  font-size: 1.1rem; /* Slightly larger for dark backgrounds */
-  color: var(--text-muted);
+.animate-float {
+  animation: float 6s ease-in-out infinite;
 }
 
-/* Basic Layout Helper */
-.container {
-  width: 100%;
-  max-width: 1100px;
-  margin: 0 auto;
-  padding: 0 2rem;
+.animate-pulse-glow {
+  animation: pulse-glow 2s infinite;
 }
 
-/* Interactive Elements */
-a {
-  color: var(--accent);
-  text-decoration: none;
-  transition: opacity 0.2s ease;
+.animate-scale-in {
+  animation: scaleIn 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
 }
 
-a:hover {
-  opacity: 0.8;
-  text-decoration: underline;
+.delay-1 {
+  animation-delay: 0.1s;
 }
 
-button {
-  font-family: var(--font-body);
-  font-weight: 600;
-  background-color: var(--accent);
-  color: var(--bg-primary);
-  border: none;
-  padding: 0.75rem 1.5rem;
-  border-radius: 6px;
-  cursor: pointer;
-  transition: transform 0.1s active;
+.delay-2 {
+  animation-delay: 0.2s;
 }
 
-button:hover {
-  filter: brightness(1.1);
+.delay-3 {
+  animation-delay: 0.3s;
 }
+
+.delay-4 {
+  animation-delay: 0.4s;
+}
+
+.delay-5 {
+  animation-delay: 0.5s;
+}
+
+/* Accent gradient backgrounds for dashboard & landing */
+.text-gradient {
+  background: linear-gradient(135deg, var(--color-text-bright) 30%, var(--color-accent-teal) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Custom Auth Form Inputs */
+.custom-auth-input {
+  background: rgba(255, 255, 255, 0.05) !important;
+  border: 1px solid rgba(255, 255, 255, 0.15) !important;
+  color: #ffffff !important;
+  border-radius: 10px !important;
+  transition: all 0.3s ease !important;
+}
+.custom-auth-input::placeholder {
+  color: rgba(255, 255, 255, 0.4) !important;
+}
+.custom-auth-input:focus {
+  background: rgba(255, 255, 255, 0.09) !important;
+  border-color: var(--color-accent-teal) !important;
+  box-shadow: 0 0 12px rgba(0, 242, 254, 0.25) !important;
+  outline: none !important;
+}
+
+/* Custom Primary Button with Shine Effect */
+.custom-primary-btn {
+  background: linear-gradient(135deg, var(--color-accent-cyan) 0%, var(--color-accent-blue) 100%) !important;
+  border: none !important;
+  color: #ffffff !important;
+  border-radius: 10px !important;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+.custom-primary-btn:hover:not(:disabled) {
+  transform: translateY(-2px) !important;
+  box-shadow: 0 8px 20px rgba(30, 99, 243, 0.45) !important;
+}
+.custom-primary-btn:active:not(:disabled) {
+  transform: translateY(0) !important;
+}
+

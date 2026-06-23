@@ -1,34 +1,25 @@
 import React from 'react';
 import { Card, Col } from 'react-bootstrap';
 
-export default function InfoCard({ icon, title, description }) {
+export default function InfoCard({ icon, title, description, delayClass }) {
   return (
-    <Col lg={6} md={12} className="mb-4">
-      {/* - border-0: Removes the default border
-          - shadow-sm: Adds the soft shadow from your design
-          - h-100: Ensures cards in the same row have equal height
-      */}
-      <Card className="border-0 shadow-sm h-100 rounded-4 p-3">
-        <Card.Body className="d-flex align-items-start">
-          {/* Icon Container with light green background */}
-          <div
-            className="d-flex align-items-center justify-content-center flex-shrink-0 rounded-3 me-4"
-            style={{
-              width: '56px',
-              height: '56px',
-              backgroundColor: '#e6f9f0', // Very light green Bootstrap-friendly hex
-              fontSize: '1.5rem',
-            }}
-          >
+    <Col lg={6} md={12} className={`mb-4 animate-fade-in-up ${delayClass}`}>
+      <Card className="border-0 info-security-card h-100 rounded-4 p-4 position-relative">
+        {/* Soft edge line decoration */}
+        <div className="card-edge-glow"></div>
+        
+        <Card.Body className="d-flex align-items-start p-0">
+          {/* Dynamic floating icon container */}
+          <div className="d-flex align-items-center justify-content-center flex-shrink-0 security-icon-wrapper rounded-3 me-4 animate-float">
             {icon}
           </div>
 
           {/* Text Content */}
           <div>
-            <Card.Title className="fw-bold mb-2 h5" style={{ color: '#212529' }}>
+            <Card.Title className="fw-bold mb-2 h5 card-security-title">
               {title}
             </Card.Title>
-            <Card.Text className="text-muted" style={{ fontSize: '0.95rem', lineHeight: '1.6' }}>
+            <Card.Text className="card-security-text">
               {description}
             </Card.Text>
           </div>

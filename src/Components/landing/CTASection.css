@@ -1,0 +1,215 @@
+/* ===== CTA SECTION ===== */
+.cta-section {
+  position: relative;
+  padding: 100px 24px;
+  background: linear-gradient(180deg, #07192f 0%, #0c3e66 50%, #07192f 100%);
+  overflow: hidden;
+}
+
+.cta-section::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(0, 242, 254, 0.3), transparent);
+}
+
+.cta-orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(120px);
+  pointer-events: none;
+}
+
+.cta-orb-1 {
+  width: 500px;
+  height: 500px;
+  background: radial-gradient(circle, rgba(30, 99, 243, 0.25) 0%, transparent 70%);
+  top: -100px;
+  left: 20%;
+  animation: float 10s ease-in-out infinite;
+}
+
+.cta-orb-2 {
+  width: 400px;
+  height: 400px;
+  background: radial-gradient(circle, rgba(0, 242, 254, 0.15) 0%, transparent 70%);
+  bottom: -80px;
+  right: 20%;
+  animation: float 13s ease-in-out infinite alternate;
+}
+
+.cta-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 2;
+}
+
+.cta-inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 32px;
+}
+
+/* Badge */
+.cta-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 20px;
+  border-radius: 100px;
+  background: rgba(0, 242, 254, 0.08);
+  border: 1px solid rgba(0, 242, 254, 0.25);
+  color: var(--color-accent-teal);
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.cta-title {
+  font-family: var(--font-title);
+  font-size: clamp(2.2rem, 5vw, 3.5rem);
+  font-weight: 900;
+  color: #fff;
+  line-height: 1.2;
+  margin: 0;
+}
+
+.cta-gradient {
+  background: linear-gradient(135deg, var(--color-accent-teal) 0%, var(--color-accent-cyan) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.cta-desc {
+  max-width: 580px;
+  font-size: 1.1rem;
+  line-height: 1.8;
+  color: rgba(255, 255, 255, 0.65);
+  margin: 0;
+}
+
+/* Cards */
+.cta-cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  width: 100%;
+  max-width: 960px;
+  margin-top: 8px;
+}
+
+.cta-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 32px 24px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1.5px solid rgba(255, 255, 255, 0.1);
+  border-radius: 22px;
+  text-align: center;
+  transition: all 0.35s ease;
+}
+
+.cta-card:hover {
+  transform: translateY(-8px);
+  border-color: rgba(0, 242, 254, 0.3);
+  box-shadow: 0 24px 60px rgba(0,0,0,0.35);
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.cta-card.cta-card-featured {
+  background: linear-gradient(135deg, rgba(0, 242, 254, 0.06), rgba(30, 99, 243, 0.08));
+  border-color: rgba(0, 242, 254, 0.35);
+  box-shadow: 0 16px 50px rgba(0, 242, 254, 0.1);
+}
+
+.cta-card.cta-card-featured:hover {
+  box-shadow: 0 28px 70px rgba(0, 242, 254, 0.2);
+}
+
+.featured-tag {
+  position: absolute;
+  top: -12px;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 4px 16px;
+  background: linear-gradient(135deg, var(--color-accent-cyan), var(--color-accent-blue));
+  border-radius: 100px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: #fff;
+  white-space: nowrap;
+}
+
+.cta-card-icon {
+  font-size: 2.4rem;
+  line-height: 1;
+  margin-bottom: 4px;
+}
+
+.cta-card h4 {
+  font-family: var(--font-title);
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #fff;
+  margin: 0;
+}
+
+.cta-card p {
+  font-size: 0.875rem;
+  line-height: 1.7;
+  color: rgba(255, 255, 255, 0.5);
+  margin: 0;
+  flex: 1;
+}
+
+.cta-card-btn {
+  display: block;
+  padding: 13px 24px;
+  border-radius: 12px;
+  font-size: 0.9rem;
+  font-weight: 700;
+  text-decoration: none;
+  transition: all 0.25s ease;
+  margin-top: 4px;
+}
+
+.cta-card-btn.primary {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1.5px solid rgba(255, 255, 255, 0.2);
+  color: rgba(255, 255, 255, 0.85) !important;
+}
+
+.cta-card-btn.primary:hover {
+  background: rgba(255, 255, 255, 0.14);
+  border-color: rgba(255, 255, 255, 0.4);
+  color: #fff !important;
+  transform: translateY(-2px);
+  text-shadow: none;
+}
+
+.cta-card-btn.featured-btn {
+  background: linear-gradient(135deg, var(--color-accent-cyan) 0%, var(--color-accent-blue) 100%);
+  color: #fff !important;
+  box-shadow: 0 8px 24px rgba(30, 99, 243, 0.45);
+  border: none;
+}
+
+.cta-card-btn.featured-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 14px 36px rgba(30, 99, 243, 0.6);
+  color: #fff !important;
+  text-shadow: none;
+}
+
+@media (max-width: 992px) {
+  .cta-cards {
+    grid-template-columns: 1fr;
+    max-width: 400px;
+  }
+}
