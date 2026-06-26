@@ -260,7 +260,7 @@ const OTPVerification = ({ email = 'example@email.com' }) => {
                       boxShadow: '0 10px 25px rgba(0, 0, 0, 0.2)',
                     }}
                   >
-                    <img src="/src/assets/logo_light-removebg.png" alt="logo" width={50} />
+                    <img src="/src/assets/logo.svg" alt="logo" width={50} />
                   </div>
                 </div>
 

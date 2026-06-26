@@ -13,7 +13,7 @@ export default function SectionOne() {
       <div className="container text-white d-flex flex-column align-items-center position-relative" style={{ zIndex: 2 }}>
         {/* Logo Container with Scale-In Animation */}
         <div className="logo-box bg-white rounded-4 p-3 mb-5 animate-scale-in">
-          <img src="/src/assets/logo_light-removebg.png" alt="Sijill Logo" className="img-fluid" />
+          <img src="/src/assets/logo.svg" alt="Sijill Logo" className="img-fluid" />
         </div>
 
         {/* Headline: Gradient Text & Merriweather/Outfit Hybrid */}

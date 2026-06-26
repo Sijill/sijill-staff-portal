@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import './Navbar.css';
+import sijillLogo from '../../assets/logo.svg';
 
 const navLinks = [
   { label: 'The Problem', href: '#problem' },
@@ -49,7 +50,7 @@ export default function Navbar() {
         {/* Logo */}
         <Link to="/" className="navbar-brand-link">
           <div className="navbar-logo-box">
-            <img src="/src/assets/logo_light-removebg.png" alt="Sijill" className="navbar-logo-img" />
+            <img src={sijillLogo} alt="Sijill" className="navbar-logo-img" />
           </div>
           <span className="navbar-brand-name">Sijill</span>
         </Link>

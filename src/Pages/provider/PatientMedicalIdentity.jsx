@@ -33,7 +33,8 @@ export default function PatientMedicalIdentity() {
       setErrorMessage('');
 
       try {
-        setIdentity(await getMedicalIdentity(clinicalSession.sessionId, clinicalSession.clinicalSessionToken));
+        const loadedIdentity = await getMedicalIdentity(clinicalSession.sessionId, clinicalSession.clinicalSessionToken);
+        setIdentity(loadedIdentity);
       } catch (error) {
         setErrorMessage(error.message || 'Unable to load medical identity.');
       } finally {
@@ -43,6 +44,27 @@ export default function PatientMedicalIdentity() {
 
     loadMedicalIdentity();
   }, [clinicalSession?.clinicalSessionToken, clinicalSession?.sessionId]);
+
+  useEffect(() => {
+    const imageUrl =
+      resolvePatientImageUrl(clinicalSession?.patient) ||
+      resolvePatientImageUrl(identity?.patient) ||
+      resolvePatientImageUrl(identity?.patientInfo) ||
+      resolvePatientImageUrl(identity?.basicInfo) ||
+      resolvePatientImageUrl(identity);
+
+    if (!clinicalSession || !imageUrl) {
+      return;
+    }
+
+    saveClinicalSession({
+      ...clinicalSession,
+      patient: {
+        ...clinicalSession.patient,
+        imageUrl,
+      },
+    });
+  }, [clinicalSession, identity]);
 
   const canEditVitals = canWriteClinicalSession(clinicalSession?.accessType);
   const basicInfo = identity?.basicInfo ?? {};
@@ -142,10 +164,13 @@ export default function PatientMedicalIdentity() {
 }
 
 function buildStats(basicInfo, canEditVitals, setModal) {
+  const bmi = calculateBmi(basicInfo.weightKg, basicInfo.heightCm);
+
   return [
     buildStat('Blood Type', basicInfo.bloodType || 'Not set', ShieldPlus, '#fff1f1', '#d14949', canEditVitals && !basicInfo.bloodType, () => setModal({ type: 'bloodType', value: 'UNKNOWN' })),
     buildStat('Weight', basicInfo.weightKg ? `${basicInfo.weightKg} KG` : 'Not set', Scale, '#edf5f4', '#285f62', canEditVitals && !basicInfo.weightKg, () => setModal({ type: 'weightKg', value: '' })),
     buildStat('Height', basicInfo.heightCm ? `${basicInfo.heightCm} CM` : 'Not set', Ruler, '#eefafb', '#36c8d3', canEditVitals && !basicInfo.heightCm, () => setModal({ type: 'heightCm', value: '' })),
+    buildStat('BMI', bmi !== null ? bmi.toFixed(2) : 'Not set', ShieldPlus, '#f4fbff', '#3b6d7a', false, null),
   ];
 }
 
@@ -170,4 +195,22 @@ function StatNumberModal({ modal, type, title, icon, placeholder, onClose, onCha
       onSave={() => modal.value.trim() && onSave({ [type]: Number(modal.value) })}
     />
   );
+}
+
+function calculateBmi(weightKg, heightCm) {
+  if (weightKg === null || weightKg === undefined || heightCm === null || heightCm === undefined) {
+    return null;
+  }
+
+  const heightInMeters = Number(heightCm) / 100;
+  if (!heightInMeters) {
+    return null;
+  }
+
+  const bmi = Number(weightKg) / (heightInMeters * heightInMeters);
+  if (Number.isNaN(bmi) || !Number.isFinite(bmi)) {
+    return null;
+  }
+
+  return Math.round(bmi * 100) / 100;
 }

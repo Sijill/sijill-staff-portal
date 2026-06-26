@@ -46,6 +46,7 @@ export default function DocumentSession() {
       navigate('/provider-session/encounter-recorded', {
         state: {
           ...buildClinicalRouteState(clinicalSession),
+          encounterId: response.encounterId,
           recordedAt: response.recordedAt || response.submittedAt || response.createdAt || new Date().toISOString(),
         },
       });

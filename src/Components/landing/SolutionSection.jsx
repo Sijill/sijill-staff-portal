@@ -1,5 +1,6 @@
 import React from 'react';
 import './SolutionSection.css';
+import sijillLogo from '../../assets/logo.svg';
 
 export default function SolutionSection() {
   return (
@@ -50,7 +51,7 @@ export default function SolutionSection() {
             <div className="solution-center-ring ring-middle" />
             <div className="solution-center-core">
               <div className="center-logo">
-                <img src="/src/assets/logo_light-removebg.png" alt="Sijill" />
+                <img src={sijillLogo} alt="Sijill" />
               </div>
               <span className="center-label">Sijill</span>
             </div>

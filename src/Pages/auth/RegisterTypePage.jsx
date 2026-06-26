@@ -17,7 +17,7 @@ import MedicalServicesIcon from '@mui/icons-material/MedicalServices';
 import ScienceIcon from '@mui/icons-material/Science';
 import ImageOutlinedIcon from '@mui/icons-material/ImageOutlined';
 import { useNavigate } from 'react-router-dom';
-import logo from '../../assets/logo_light-removebg.png';
+import logo from '../../assets/logo.svg';
 import '../../Components/sectionOne/SectionOne.css'; // Access animated floating orbs
 
 const RegisterTypePage = () => {

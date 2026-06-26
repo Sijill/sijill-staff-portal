@@ -1,7 +1,7 @@
 import React from 'react';
 import { Box, Card, CardContent, Button, Container } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
-import logo from '../assets/logo_light-removebg.png';
+import logo from '../assets/logo.svg';
 import '../Components/sectionOne/SectionOne.css'; // Leverage orb animations
 
 const AuthLayout = ({ children, showBackButton = true }) => {

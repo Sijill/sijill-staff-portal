@@ -12,8 +12,51 @@ function buildFallbackItems(message) {
   ];
 }
 
+function buildBasicInfoItems(identity) {
+  const basicInfo = identity?.basicInfo ?? {};
+  const bmi = calculateBmi(basicInfo.weightKg, basicInfo.heightCm);
+
+  return [
+    {
+      title: basicInfo.fullName || 'Name not provided',
+      subtitle: formatEnumLabel(basicInfo.gender),
+      note: basicInfo.age !== undefined && basicInfo.age !== null ? `${basicInfo.age} years old` : 'Age not provided',
+      tone: 'teal',
+    },
+    {
+      title: 'Blood Type',
+      subtitle: basicInfo.bloodType || 'Not set',
+      note: 'Editable from the vitals modal',
+      tone: basicInfo.bloodType ? 'teal' : 'mint',
+    },
+    {
+      title: 'Weight',
+      subtitle: basicInfo.weightKg !== undefined && basicInfo.weightKg !== null ? `${basicInfo.weightKg} kg` : 'Not set',
+      note: 'Editable from the vitals modal',
+      tone: basicInfo.weightKg ? 'teal' : 'mint',
+    },
+    {
+      title: 'Height',
+      subtitle: basicInfo.heightCm !== undefined && basicInfo.heightCm !== null ? `${basicInfo.heightCm} cm` : 'Not set',
+      note: 'Editable from the vitals modal',
+      tone: basicInfo.heightCm ? 'teal' : 'mint',
+    },
+    {
+      title: 'BMI',
+      subtitle: bmi !== null ? bmi.toFixed(2) : 'Not calculated',
+      note: 'Derived from height and weight',
+      tone: bmi !== null ? 'teal' : 'mint',
+    },
+  ];
+}
+
 export default function buildMedicalIdentitySections(identity) {
   return [
+    {
+      title: 'Patient Overview',
+      icon: HeartPulse,
+      items: identity?.basicInfo ? buildBasicInfoItems(identity) : buildFallbackItems('No patient identity details available'),
+    },
     {
       title: 'Active Diagnosis',
       icon: HeartPulse,
@@ -33,7 +76,11 @@ export default function buildMedicalIdentitySections(identity) {
         ? identity.currentMedications.map((item) => ({
             title: item.medicationName,
             subtitle: `${item.dosageAmount} ${item.dosageUnit} - ${formatEnumLabel(item.form)} - ${formatEnumLabel(item.frequency)}`,
-            note: `Prescribed by ${item.prescribedBy} - ${formatDateTime(item.prescribedAt)}`,
+            note: [
+              item.prescribedBy ? `Prescribed by ${item.prescribedBy}` : null,
+              item.prescribedAt ? formatDateTime(item.prescribedAt) : null,
+              item.instructions ? `Instructions: ${item.instructions}` : null,
+            ].filter(Boolean).join(' - '),
             meta: `${formatDate(item.startDate)} - ${item.endDate ? formatDate(item.endDate) : 'Ongoing'}`,
             tone: 'teal',
           }))
@@ -78,4 +125,22 @@ export default function buildMedicalIdentitySections(identity) {
         : buildFallbackItems('No emergency contacts recorded'),
     },
   ];
+}
+
+function calculateBmi(weightKg, heightCm) {
+  if (weightKg === null || weightKg === undefined || heightCm === null || heightCm === undefined) {
+    return null;
+  }
+
+  const heightInMeters = Number(heightCm) / 100;
+  if (!heightInMeters) {
+    return null;
+  }
+
+  const bmi = Number(weightKg) / (heightInMeters * heightInMeters);
+  if (Number.isNaN(bmi) || !Number.isFinite(bmi)) {
+    return null;
+  }
+
+  return Math.round(bmi * 100) / 100;
 }

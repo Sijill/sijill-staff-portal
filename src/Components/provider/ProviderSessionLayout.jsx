@@ -1,9 +1,12 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { Button, Col, Container, Row } from 'react-bootstrap';
 import { SquarePen } from 'lucide-react';
 import ProviderSessionHeader from './ProviderSessionHeader';
 import { getProviderSessionBackPath, isProviderSessionStepPath } from './providerSessionFlow';
+import api from '../../api/httpClient';
+import { normalizeClinicalDocumentUrl } from '../../api/clinicalApi';
+import { getClinicalSession } from '../../utils/clinicalSession';
 
 const surfaceStyles = {
   page: {
@@ -24,14 +27,59 @@ const surfaceStyles = {
 };
 
 const ProviderSessionLayout = ({ patient, stats = [], onBack, children }) => {
-
   const navigate = useNavigate();
   const { pathname, state } = useLocation();
+  const clinicalSession = state?.clinicalSession ?? getClinicalSession();
   const hasPatient = Boolean(patient?.name || patient?.meta);
   const hasStats = stats.length > 0;
   const hasSummarySection = hasPatient || hasStats;
   const shouldShowSteps = isProviderSessionStepPath(pathname);
   const defaultBackPath = getProviderSessionBackPath(pathname);
+  const [profilePictureUrl, setProfilePictureUrl] = useState('');
+
+  useEffect(() => {
+    let cancelled = false;
+    let activeObjectUrl = null;
+
+    async function loadProfilePicture() {
+      const candidateUrl = normalizeClinicalDocumentUrl(patient?.imageUrl);
+
+      if (!candidateUrl || !clinicalSession?.clinicalSessionToken) {
+        setProfilePictureUrl('');
+        return;
+      }
+
+      try {
+        const response = await api.get(candidateUrl, {
+          headers: {
+            Authorization: `Bearer ${clinicalSession.clinicalSessionToken}`,
+          },
+          responseType: 'blob',
+        });
+
+        if (cancelled) {
+          return;
+        }
+
+        activeObjectUrl = URL.createObjectURL(response);
+        setProfilePictureUrl(activeObjectUrl);
+      } catch {
+        if (!cancelled) {
+          setProfilePictureUrl('');
+        }
+      }
+    }
+
+    loadProfilePicture();
+
+    return () => {
+      cancelled = true;
+
+      if (activeObjectUrl) {
+        URL.revokeObjectURL(activeObjectUrl);
+      }
+    };
+  }, [clinicalSession?.clinicalSessionToken, patient?.imageUrl]);
 
   const handleBack =
     onBack ??
@@ -58,9 +106,9 @@ const ProviderSessionLayout = ({ patient, stats = [], onBack, children }) => {
                   }}
                   aria-hidden="true"
                 >
-                  {patient.imageUrl ? (
+                  {profilePictureUrl ? (
                     <img
-                      src={patient.imageUrl}
+                      src={profilePictureUrl}
                       alt=""
                       aria-hidden="true"
                       style={{

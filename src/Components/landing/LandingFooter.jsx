@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import './LandingFooter.css';
+import sijillLogo from '../../assets/logo.svg';
 
 export default function LandingFooter() {
   const year = new Date().getFullYear();
@@ -16,7 +17,7 @@ export default function LandingFooter() {
           <div className="footer-brand">
             <div className="footer-logo-wrap">
               <div className="footer-logo-box">
-                <img src="/src/assets/logo_light-removebg.png" alt="Sijill" />
+                <img src={sijillLogo} alt="Sijill" />
               </div>
               <div>
                 <h3 className="footer-brand-name">Sijill</h3>

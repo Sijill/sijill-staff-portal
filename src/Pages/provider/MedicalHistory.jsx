@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { AlertCircle, LoaderCircle, Stethoscope } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import ProviderSessionLayout from '../../Components/provider/ProviderSessionLayout';
@@ -36,7 +36,8 @@ export default function MedicalHistory() {
 
       try {
         const response = await getMedicalHistory(clinicalSession.sessionId, clinicalSession.clinicalSessionToken);
-        setHistoryEntries(Array.isArray(response) ? response : []);
+        const entries = Array.isArray(response) ? response : response?.data ?? [];
+        setHistoryEntries(entries);
       } catch (error) {
         setErrorMessage(error.message || 'Unable to load medical history.');
       } finally {
@@ -47,7 +48,11 @@ export default function MedicalHistory() {
     loadMedicalHistory();
   }, [clinicalSession?.accessType, clinicalSession?.clinicalSessionToken, clinicalSession?.sessionId]);
 
-  const handleOpenEncounter = async (entry) => {
+  const handleOpenEncounter = useCallback(async (entry) => {
+    if (!clinicalSession?.sessionId || !clinicalSession?.clinicalSessionToken || !entry?.encounterId) {
+      return;
+    }
+
     setSelectedEncounter(entry.encounterId);
     setSelectedEncounterDetail(null);
     setIsDetailLoading(true);
@@ -60,7 +65,15 @@ export default function MedicalHistory() {
     } finally {
       setIsDetailLoading(false);
     }
-  };
+  }, [clinicalSession?.clinicalSessionToken, clinicalSession?.sessionId]);
+
+  useEffect(() => {
+    if (!historyEntries.length || selectedEncounter) {
+      return;
+    }
+
+    handleOpenEncounter(historyEntries[0]);
+  }, [handleOpenEncounter, historyEntries, selectedEncounter]);
 
   return (
     <ProviderSessionLayout patient={patient}>
@@ -72,7 +85,7 @@ export default function MedicalHistory() {
         ) : historyEntries.length ? (
           <>
             <ProviderStatusMessage icon={LoaderCircle} message={isDetailLoading ? 'Loading encounter detail...' : ''} tone="info" className="mb-3" />
-            <EncounterDetailPanel detail={selectedEncounterDetail} />
+            <EncounterDetailPanel detail={selectedEncounterDetail} sessionId={clinicalSession.sessionId} clinicalSessionToken={clinicalSession.clinicalSessionToken} />
             {historyEntries.map((entry) => (
               <HistoryCard key={entry.encounterId} entry={entry} onOpen={handleOpenEncounter} isActive={selectedEncounter === entry.encounterId} />
             ))}

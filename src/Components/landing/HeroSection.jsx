@@ -1,6 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import './HeroSection.css';
+import sijillLogo from '../../assets/logo.svg';
 
 export default function HeroSection() {
   const particlesRef = useRef(null);
@@ -48,7 +49,7 @@ export default function HeroSection() {
         {/* Logo */}
         <div className="hero-logo-wrap animate-scale-in">
           <div className="hero-logo-bg">
-            <img src="/src/assets/logo_light-removebg.png" alt="Sijill Logo" className="hero-logo-img" />
+            <img src={sijillLogo} alt="Sijill Logo" className="hero-logo-img" />
           </div>
           <div className="hero-logo-glow" />
         </div>

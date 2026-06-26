@@ -2,7 +2,7 @@ import React from 'react';
 import { Button, Container } from 'react-bootstrap';
 import { MoveLeft, UserRound } from 'lucide-react';
 import PatientSessionSteps from './PatientSessionSteps';
-import sijillLogo from '../../assets/logo_light-removebg.png';
+import sijillLogo from '../../assets/logo.svg';
 import { Link } from 'react-router-dom';
 const headerStyles = {
   wrapper: {
