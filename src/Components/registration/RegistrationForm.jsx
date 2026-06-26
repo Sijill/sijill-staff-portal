@@ -227,13 +227,16 @@ const RegistrationForm = ({
     setErrors({});
     setIsSubmitting(true);
     try {
-      await registerUser(buildRegistrationFormData());
+      const response = await registerUser(buildRegistrationFormData());
       const query = createSearchParams({
+        mode: 'registration',
+        registrationSessionId: response.registrationSessionId,
+        email: response.otpDelivery || formData.email,
         registrationType: registrationType || 'simple',
         entityType: entityType || '',
       }).toString();
 
-      navigate(`/registration-submitted?${query}`);
+      navigate(`/otp-verification?${query}`);
     } catch (error) {
       setSubmitError(error.message || 'Registration failed. Please try again.');
     } finally {

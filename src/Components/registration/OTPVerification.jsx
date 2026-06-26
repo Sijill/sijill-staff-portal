@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Card, Button, Form, Row, Col, Container } from 'react-bootstrap';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate, createSearchParams } from 'react-router-dom';
 import {
   resendLoginOtp,
   resendRegistrationOtp,
@@ -145,11 +145,17 @@ const OTPVerification = ({ email = 'example@email.com' }) => {
         updateToast(loadingId, {
           type: 'success',
           title: 'Email Verified',
-          message: 'Registration complete! Redirecting to login…',
+          message: 'Registration complete! Your application is under review.',
           duration: 3000,
         });
 
-        setTimeout(() => navigate('/login'), 800);
+        const regType = params.get('registrationType') || 'simple';
+        const entType = params.get('entityType') || '';
+        const resultQuery = createSearchParams({
+          registrationType: regType,
+          entityType: entType,
+        }).toString();
+        setTimeout(() => navigate(`/registration-submitted?${resultQuery}`), 800);
       }
     } catch (error) {
       updateToast(loadingId, {
