@@ -153,7 +153,7 @@ function LabResultView({ result, sessionId, clinicalSessionToken }) {
 
   return (
     <div>
-      {(result.resultData?.testType || result.resultData?.specimenType || result.resultData?.clinicalIndication || result.resultData?.overallImpression || structuredResults.length > 0) && (
+      {(result.resultData || structuredResults.length > 0) && (
         <div className="mb-2">
           <div className="d-flex flex-wrap gap-2 mb-2">
             {result.resultData?.testType ? <DataChip label="Test" value={formatEnumLabel(result.resultData.testType)} /> : null}
@@ -181,10 +181,19 @@ function LabResultView({ result, sessionId, clinicalSessionToken }) {
             </div>
           ) : null}
 
-          {typeof result.resultData === 'object' && !structuredResults.length ? (
-            <pre style={{ fontSize: '0.78rem', color: '#3a555b', background: '#edf7f9', padding: '8px', borderRadius: '8px', whiteSpace: 'pre-wrap', margin: 0 }}>
-              {JSON.stringify(result.resultData, null, 2)}
-            </pre>
+          {typeof result.resultData === 'object' && !structuredResults.length && !result.resultData?.testType ? (
+            <div className="mb-2 rounded-3 overflow-hidden" style={{ border: '1px solid rgba(41, 92, 98, 0.12)' }}>
+              {Object.entries(result.resultData).map(([key, value], index) => (
+                <div
+                  key={key}
+                  className="d-flex flex-wrap justify-content-between gap-2 px-3 py-2"
+                  style={{ background: index % 2 === 0 ? '#f7fcfd' : '#eef7f9', borderBottom: index === Object.entries(result.resultData).length - 1 ? 'none' : '1px solid rgba(41, 92, 98, 0.08)' }}
+                >
+                  <div style={{ fontWeight: 700, color: '#244047', fontSize: '0.82rem' }}>{key}</div>
+                  <div style={{ color: '#3a555b', fontSize: '0.82rem', fontWeight: 600 }}>{value ?? 'N/A'}</div>
+                </div>
+              ))}
+            </div>
           ) : null}
         </div>
       )}
