@@ -13,6 +13,7 @@ import { getAccountStatusMessage } from '../../utils/sessionErrorMessages';
 import { fillTokenArray, normalizeTokenDigits } from '../../utils/tokenInput';
 import '../../Components/sectionOne/SectionOne.css'; // Access animated floating orbs
 import { useToast } from '../../context/ToastContext';
+import logo from '../../assets/logo.svg';
 
 const OTP_LENGTH = 6;
 
@@ -266,7 +267,7 @@ const OTPVerification = ({ email = 'example@email.com' }) => {
                       boxShadow: '0 10px 25px rgba(0, 0, 0, 0.2)',
                     }}
                   >
-                    <img src="/src/assets/logo.svg" alt="logo" width={50} />
+                    <img src={logo} alt="logo" width={50} />
                   </div>
                 </div>
 
