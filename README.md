@@ -219,20 +219,20 @@ The app will be available at 👉 **`http://localhost:8080`**
 
 **Windows (PowerShell)**:
 ```powershell
-$env:VITE_API_BASE_URL="https://your-api.example.com/api/v1"
+$env:VITE_API_BASE_URL="{{baseUrl}}/api/v1"
 docker compose up --build
 ```
 
 **Linux / macOS (Bash)**:
 ```bash
-VITE_API_BASE_URL="https://your-api.example.com/api/v1" docker compose up --build
+VITE_API_BASE_URL="{{baseUrl}}/api/v1" docker compose up --build
 ```
 
 ### 🏗️ Build the Image Directly
 
 ```bash
 docker build -t sijill-staff-portal \
-  --build-arg VITE_API_BASE_URL=https://your-api.example.com/api/v1 .
+  --build-arg VITE_API_BASE_URL= {{baseUrl}}/api/v1 .
 
 docker run -p 8080:80 sijill-staff-portal
 ```
