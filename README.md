@@ -276,8 +276,8 @@ This project is licensed under the **MIT License**.
 
 <img src="https://capsule-render.vercel.app/api?type=waving&color=gradient&customColorList=6,11,20&height=120&section=footer&animation=twinkling" width="100%"/>
 
-**Built with ❤️ for the Sijill EHR Ecosystem**
+**Built with ❤️ by the Sijill Engineering Team**
 
-*Last Updated: July 2026*
+*Last Updated: 1 July 2026*
 
 </div>
