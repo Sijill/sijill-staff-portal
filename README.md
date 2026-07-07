@@ -268,9 +268,9 @@ docker run -p 8080:80 sijill-staff-portal
 
 
 
-## 📜 License
+![License](https://img.shields.io/badge/License-Proprietary-red?style=flat-square)
 
-This project is licensed under the **MIT License**.
+This project is proprietary software. All rights reserved © Sijill Engineering Team.
 
 ---
 
